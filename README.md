@@ -1,2 +1,2 @@
 # Otus.Project
-Test project in scope of course "Microservice Architecture"
+📚 Homework(s) in scope of a course ["Microservice Architecture"](https://otus.ru/lessons/microservice-architecture/)
