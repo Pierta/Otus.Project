@@ -3,8 +3,10 @@
 
 How to run hw #1:
 ```console
-kubectl apply -f k8s-manifests/ingress-nginx.yaml
-kubectl apply -f k8s-manifests/simple-api.yaml
+# if you don't have nginx installed:
+kubectl apply -f k8s-manifests/common/ingress-nginx.yaml
+# install application with '/health' endpoint
+kubectl apply -f k8s-manifests/hw-1/main-api.yaml
 ```
 
 How to test hw #1:

@@ -9,10 +9,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A6F1B505-897
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C551978A-7083-4248-933C-CA5B1DD27C8F}"
 	ProjectSection(SolutionItems) = preProject
-		k8s-manifests\ingress-nginx.yaml = k8s-manifests\ingress-nginx.yaml
 		README.md = README.md
-		k8s-manifests\simple-api.yaml = k8s-manifests\simple-api.yaml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-1", "hw-1", "{FDB9E4EA-896C-46A6-BB00-7D6F171D5622}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-1\main-api.yaml = k8s-manifests\hw-1\main-api.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{9A1A6799-123E-47E5-913D-0714F1A28764}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\common\ingress-nginx.yaml = k8s-manifests\common\ingress-nginx.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-2", "hw-2", "{62192023-EA97-49E0-80DE-E95F0824C7B9}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-2\crud-api.yaml = k8s-manifests\hw-2\crud-api.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.CrudApi", "Otus.Project.CrudApi\Otus.Project.CrudApi.csproj", "{A800B9D8-9657-4179-B324-BA784D641124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,12 +39,20 @@ Global
 		{BE21B1B4-BBB2-4328-96A8-3B42C31A0ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE21B1B4-BBB2-4328-96A8-3B42C31A0ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE21B1B4-BBB2-4328-96A8-3B42C31A0ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A800B9D8-9657-4179-B324-BA784D641124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A800B9D8-9657-4179-B324-BA784D641124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A800B9D8-9657-4179-B324-BA784D641124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A800B9D8-9657-4179-B324-BA784D641124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BE21B1B4-BBB2-4328-96A8-3B42C31A0ACB} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{FDB9E4EA-896C-46A6-BB00-7D6F171D5622} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
+		{9A1A6799-123E-47E5-913D-0714F1A28764} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
+		{62192023-EA97-49E0-80DE-E95F0824C7B9} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
+		{A800B9D8-9657-4179-B324-BA784D641124} = {A6F1B505-8977-4499-B203-E77472EAF233}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: otus-project
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mainapi
+  namespace: otus-project
+spec:
+  type: LoadBalancer  
+  selector:
+    app: mainapi
+  ports:
+    - port: 8000
+      targetPort: web
+    
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mainapi
+  namespace: otus-project
+  labels:
+    app: mainapi
+spec:
+  selector:
+    matchLabels:
+      app: mainapi
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: mainapi
+    spec:
+      containers:            
+        - image: pierta/otus.project.mainapi
+          name: otus-project-mainapi
+          ports:
+            - name: web
+              containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: web
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 3
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mainapi
+  namespace: otus-project
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      rewrite ^/otusapp/(\w+)/(.*) /$2 last;
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: mainapi
+                port:
+                  number: 8000
