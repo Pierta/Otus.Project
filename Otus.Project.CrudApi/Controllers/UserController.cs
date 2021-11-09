@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Otus.Project.CrudApi.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Otus.Project.CrudApi.Controllers
 {
@@ -18,9 +20,12 @@ namespace Otus.Project.CrudApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get(CancellationToken ct)
         {
-            return Ok();
+            _logger.LogInformation("GetUsers action has been requested");
+            var users = await _userService.GetUsers(ct);
+
+            return Ok(users);
         }
     }
 }
