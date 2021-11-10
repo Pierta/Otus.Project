@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Otus.Project.CrudApi.Extensions;
 using Otus.Project.CrudApi.Services;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
@@ -43,8 +44,13 @@ namespace Otus.Project.CrudApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IHostApplicationLifetime hostApplicationLifetime)
         {
+            // # To peform database migration:
+            // dotnet Otus.Project.CrudApi.dll --migrate=true
+            hostApplicationLifetime.AddDbMigrationHandler(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
