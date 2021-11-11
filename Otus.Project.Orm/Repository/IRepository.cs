@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Otus.Project.Orm.Repository
 {
@@ -10,18 +12,18 @@ namespace Otus.Project.Orm.Repository
 
         void Delete(T item);
 
-        void Delete(TId id);
+        Task Delete(TId id);
 
         void Update(T item);
 
-        T FindByID(TId id);
+        Task<T> FindByID(TId id, CancellationToken ct);
 
-        T FindByExpression(Expression<Func<T, bool>> predicate);
+        Task<T> FindByExpression(Expression<Func<T, bool>> predicate);
 
         IQueryable<T> FindAllByExpression(Expression<Func<T, bool>> predicate);
 
         IQueryable<T> FindAll();
 
-        void CommitChanges();
+        Task CommitChangesAsync(CancellationToken ct);
     }
 }

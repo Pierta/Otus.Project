@@ -2,6 +2,8 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Otus.Project.Orm.Repository
 {
@@ -29,9 +31,9 @@ namespace Otus.Project.Orm.Repository
             Entities.Remove(entity);
         }
 
-        public void Delete(TId id)
+        public async Task Delete(TId id)
         {
-            TEntity entity = FindByID(id);
+            TEntity entity = await FindByID(id);
             if (entity != null)
             {
                 Delete(entity);
@@ -43,14 +45,14 @@ namespace Otus.Project.Orm.Repository
             dbContext.Entry(item).State = EntityState.Modified;
         }
 
-        public TEntity FindByID(TId id)
+        public async Task<TEntity> FindByID(TId id, CancellationToken ct = default)
         {
-            return Entities.Find(id);
+            return await Entities.FindAsync(new object[] { id }, cancellationToken: ct);
         }
 
-        public TEntity FindByExpression(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> FindByExpression(Expression<Func<TEntity, bool>> predicate)
         {
-            return FindAll().SingleOrDefault(predicate);
+            return FindAll().SingleOrDefaultAsync(predicate);
         }
 
         public IQueryable<TEntity> FindAllByExpression(Expression<Func<TEntity, bool>> predicate)
@@ -63,12 +65,12 @@ namespace Otus.Project.Orm.Repository
             return Entities.AsQueryable();
         }
 
-        public void CommitChanges()
+        public async Task CommitChangesAsync(CancellationToken ct = default)
         {
-            using (var transaction = dbContext.Database.BeginTransaction())
+            using (var transaction = await dbContext.Database.BeginTransactionAsync(ct))
             {
-                dbContext.SaveChanges();
-                transaction.Commit();
+                await dbContext.SaveChangesAsync(ct);
+                await transaction.CommitAsync(ct);
             }
         }
 
