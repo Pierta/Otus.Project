@@ -43,3 +43,4 @@ curl http://arch.homework/users # returns list of 3 users
 # remove all the resources:
 #kubectl delete namespace otus-project
 ```
+Also, you can import [a postman collection](https://github.com/Pierta/Otus.Project/blob/develop/k8s-manifests/hw-2/Otus.Project.postman_collection.json)
