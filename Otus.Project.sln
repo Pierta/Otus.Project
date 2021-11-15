@@ -24,14 +24,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{9A1A67
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-2", "hw-2", "{62192023-EA97-49E0-80DE-E95F0824C7B9}"
 	ProjectSection(SolutionItems) = preProject
-		k8s-manifests\hw-2\crud-api.yaml = k8s-manifests\hw-2\crud-api.yaml
+		k8s-manifests\hw-2\Otus.Project.postman_collection.json = k8s-manifests\hw-2\Otus.Project.postman_collection.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.CrudApi", "Otus.Project.CrudApi\Otus.Project.CrudApi.csproj", "{A800B9D8-9657-4179-B324-BA784D641124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.Orm", "Otus.Project.Orm\Otus.Project.Orm.csproj", "{85771DB9-C54F-418A-8195-4258FE80DB12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.Orm", "Otus.Project.Orm\Otus.Project.Orm.csproj", "{85771DB9-C54F-418A-8195-4258FE80DB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.Domain", "Otus.Project.Domain\Otus.Project.Domain.csproj", "{1B604824-FDAB-4BE1-8EF6-088E9ED38896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.Domain", "Otus.Project.Domain\Otus.Project.Domain.csproj", "{1B604824-FDAB-4BE1-8EF6-088E9ED38896}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crud-api-chart", "crud-api-chart", "{2AC8EA72-0622-4B1B-84B6-98B0CBB6DD1B}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-2\crud-api-chart\Chart.yaml = k8s-manifests\hw-2\crud-api-chart\Chart.yaml
+		k8s-manifests\hw-2\crud-api-chart\values.yaml = k8s-manifests\hw-2\crud-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{ADFC092E-3EE0-433C-96BD-A30D3C71453A}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-2\crud-api-chart\templates\config.yaml = k8s-manifests\hw-2\crud-api-chart\templates\config.yaml
+		k8s-manifests\hw-2\crud-api-chart\templates\deployment.yaml = k8s-manifests\hw-2\crud-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-2\crud-api-chart\templates\ingress.yaml = k8s-manifests\hw-2\crud-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-2\crud-api-chart\templates\job.yaml = k8s-manifests\hw-2\crud-api-chart\templates\job.yaml
+		k8s-manifests\hw-2\crud-api-chart\templates\service.yaml = k8s-manifests\hw-2\crud-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres-chart", "postgres-chart", "{065CF99C-4C5C-4C96-A9CA-BCF7C0CACCE5}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-2\postgres-chart\values.yaml = k8s-manifests\hw-2\postgres-chart\values.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +87,9 @@ Global
 		{A800B9D8-9657-4179-B324-BA784D641124} = {A6F1B505-8977-4499-B203-E77472EAF233}
 		{85771DB9-C54F-418A-8195-4258FE80DB12} = {A6F1B505-8977-4499-B203-E77472EAF233}
 		{1B604824-FDAB-4BE1-8EF6-088E9ED38896} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{2AC8EA72-0622-4B1B-84B6-98B0CBB6DD1B} = {62192023-EA97-49E0-80DE-E95F0824C7B9}
+		{ADFC092E-3EE0-433C-96BD-A30D3C71453A} = {2AC8EA72-0622-4B1B-84B6-98B0CBB6DD1B}
+		{065CF99C-4C5C-4C96-A9CA-BCF7C0CACCE5} = {62192023-EA97-49E0-80DE-E95F0824C7B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

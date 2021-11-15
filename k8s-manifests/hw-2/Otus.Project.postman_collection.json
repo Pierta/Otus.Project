@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "241a5765-ce7a-4788-89b6-87516f91b149",
+		"name": "Otus.Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users API",
+			"item": [
+				{
+					"name": "Get Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/0796f40a-9e24-46ea-a7a5-ea445d2d4ae1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"0796f40a-9e24-46ea-a7a5-ea445d2d4ae1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"createdDate\": \"2021-11-15T11:25:52.623Z\",\r\n  \"updatedDate\": \"2021-11-15T11:25:52.623Z\",\r\n  \"firstName\": \"Newbie\",\r\n  \"lastName\": \"Test\",\r\n  \"middleName\": \"Test\",\r\n  \"email\": \"newbie@domain.com\",\r\n  \"cellPhone\": \"111-222-3333\",\r\n  \"password\": \"1234\",\r\n  \"isEmailNotificationEnabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an existing User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"createdDate\": \"2021-11-15T11:25:52.623Z\",\r\n  \"updatedDate\": \"2021-11-15T11:25:52.623Z\",\r\n  \"firstName\": \"Newbie\",\r\n  \"lastName\": \"Changed\",\r\n  \"middleName\": \"Test\",\r\n  \"email\": \"newbie@domain.com\",\r\n  \"cellPhone\": \"111-222-4444\",\r\n  \"password\": \"123456\",\r\n  \"isEmailNotificationEnabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/d3a33694-e30d-49bc-8af6-ef25957887b8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"d3a33694-e30d-49bc-8af6-ef25957887b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an existing User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/d3a33694-e30d-49bc-8af6-ef25957887b8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"d3a33694-e30d-49bc-8af6-ef25957887b8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://arch.homework"
+		}
+	]
+}

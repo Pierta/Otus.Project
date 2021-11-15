@@ -15,13 +15,17 @@ namespace Otus.Project.CrudApi.Extensions
                 var migrateArg = configuration["migrate"];
                 if (migrateArg == "true")
                 {
+                    Console.WriteLine("Starting migration...");
                     var builder = new DbContextOptionsBuilder<StorageContext>();
-                    var connectionString = configuration.GetConnectionString("DefaultConnection");
-                    builder.UseNpgsql(connectionString);
+                    string connection = Environment.GetEnvironmentVariable("DATABASE_URI")
+                        ?? configuration.GetConnectionString("DefaultConnection");
+                    builder.UseNpgsql(connection);
+                    Console.WriteLine(connection);
                     using (var dbContext = new StorageContext(builder.Options))
                     {
                         await dbContext.Database.MigrateAsync();
                     }
+                    Console.WriteLine("Migration completed!");
                     appLifetime.StopApplication();
                 }
                 else if (migrateArg != null)
