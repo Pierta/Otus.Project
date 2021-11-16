@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{9A1A67
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-2", "hw-2", "{62192023-EA97-49E0-80DE-E95F0824C7B9}"
 	ProjectSection(SolutionItems) = preProject
-		k8s-manifests\hw-2\Otus.Project.postman_collection.json = k8s-manifests\hw-2\Otus.Project.postman_collection.json
+		k8s-manifests\hw-2\postman_collection.json = k8s-manifests\hw-2\postman_collection.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.CrudApi", "Otus.Project.CrudApi\Otus.Project.CrudApi.csproj", "{A800B9D8-9657-4179-B324-BA784D641124}"

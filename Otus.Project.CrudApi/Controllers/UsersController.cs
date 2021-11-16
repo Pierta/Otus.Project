@@ -52,7 +52,7 @@ namespace Otus.Project.CrudApi.Controllers
             _logger.LogInformation("'Add User' action has been requested");
             var newUserId = await _userService.AddUser(newUser, ct);
 
-            return Ok(newUserId);
+            return Ok(new UserIdVm { Id = newUserId });
         }
 
         [HttpPut("{userId:Guid}")]

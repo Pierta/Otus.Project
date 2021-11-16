@@ -40,39 +40,19 @@
 					"response": []
 				},
 				{
-					"name": "Get User by Id",
+					"name": "Add a new User",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"user_id\", jsonObj.id)"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/users/0796f40a-9e24-46ea-a7a5-ea445d2d4ae1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"0796f40a-9e24-46ea-a7a5-ea445d2d4ae1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add a new User",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -98,6 +78,38 @@
 					"response": []
 				},
 				{
+					"name": "Get User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update an existing User",
 					"request": {
 						"method": "PUT",
@@ -112,13 +124,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/users/d3a33694-e30d-49bc-8af6-ef25957887b8",
+							"raw": "{{base_url}}/users/{{user_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"users",
-								"d3a33694-e30d-49bc-8af6-ef25957887b8"
+								"{{user_id}}"
 							]
 						}
 					},
@@ -139,13 +151,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/users/d3a33694-e30d-49bc-8af6-ef25957887b8",
+							"raw": "{{base_url}}/users/{{user_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"users",
-								"d3a33694-e30d-49bc-8af6-ef25957887b8"
+								"{{user_id}}"
 							]
 						}
 					},
@@ -178,6 +190,10 @@
 		{
 			"key": "base_url",
 			"value": "http://arch.homework"
+		},
+		{
+			"key": "user_id",
+			"value": ""
 		}
 	]
 }
