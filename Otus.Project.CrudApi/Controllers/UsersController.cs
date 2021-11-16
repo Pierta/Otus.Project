@@ -50,9 +50,9 @@ namespace Otus.Project.CrudApi.Controllers
         public async Task<IActionResult> Post([FromBody] UserModel newUser, CancellationToken ct)
         {
             _logger.LogInformation("'Add User' action has been requested");
-            await _userService.AddUser(newUser, ct);
+            var newUserId = await _userService.AddUser(newUser, ct);
 
-            return Ok($"User {newUser.FirstName} {newUser.LastName} has been created!");
+            return Ok(newUserId);
         }
 
         [HttpPut("{userId:Guid}")]
