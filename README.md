@@ -31,6 +31,7 @@ kubectl delete -f k8s-manifests/hw-1/main-api.yaml
 
 How to run hw #2:
 ```console
+cd k8s-manifests/hw-2/
 # install postgres instance with metrics exporter
 helm install db bitnami/postgresql -f postgres-chart/values.yaml --namespace otus-project --create-namespace --wait
 # install an application with crud api for managing users
