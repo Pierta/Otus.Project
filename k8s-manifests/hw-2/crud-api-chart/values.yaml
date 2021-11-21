@@ -10,6 +10,10 @@ service:
   type: LoadBalancer
   port: 8800
 
+metrics:
+  serviceMonitor:
+    enabled: true
+
 image:
   repository: pierta/otus.project.crudapi
   pullPolicy: Always

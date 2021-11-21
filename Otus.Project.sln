@@ -46,11 +46,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		k8s-manifests\hw-2\crud-api-chart\templates\ingress.yaml = k8s-manifests\hw-2\crud-api-chart\templates\ingress.yaml
 		k8s-manifests\hw-2\crud-api-chart\templates\job.yaml = k8s-manifests\hw-2\crud-api-chart\templates\job.yaml
 		k8s-manifests\hw-2\crud-api-chart\templates\service.yaml = k8s-manifests\hw-2\crud-api-chart\templates\service.yaml
+		k8s-manifests\hw-2\crud-api-chart\templates\servicemonitor.yaml = k8s-manifests\hw-2\crud-api-chart\templates\servicemonitor.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres-chart", "postgres-chart", "{065CF99C-4C5C-4C96-A9CA-BCF7C0CACCE5}"
 	ProjectSection(SolutionItems) = preProject
 		k8s-manifests\hw-2\postgres-chart\values.yaml = k8s-manifests\hw-2\postgres-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-3", "hw-3", "{69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus-chart", "prometheus-chart", "{6AEDB7C7-E2E8-47CA-87D8-4BA13F1BF125}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-3\prometheus-chart\values.yaml = k8s-manifests\hw-3\prometheus-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ingress-nginx-chart", "ingress-nginx-chart", "{58539CD0-3C34-481A-949E-B7B5D3DDF004}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-3\ingress-nginx-chart\values.yaml = k8s-manifests\hw-3\ingress-nginx-chart\values.yaml
 	EndProjectSection
 EndProject
 Global
@@ -90,6 +103,9 @@ Global
 		{2AC8EA72-0622-4B1B-84B6-98B0CBB6DD1B} = {62192023-EA97-49E0-80DE-E95F0824C7B9}
 		{ADFC092E-3EE0-433C-96BD-A30D3C71453A} = {2AC8EA72-0622-4B1B-84B6-98B0CBB6DD1B}
 		{065CF99C-4C5C-4C96-A9CA-BCF7C0CACCE5} = {62192023-EA97-49E0-80DE-E95F0824C7B9}
+		{69BCB07E-FAA0-4F94-80C9-736C6F34B4DB} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
+		{6AEDB7C7-E2E8-47CA-87D8-4BA13F1BF125} = {69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}
+		{58539CD0-3C34-481A-949E-B7B5D3DDF004} = {69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}
