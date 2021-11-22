@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-3", "hw-3", "{69BCB07E-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus-chart", "prometheus-chart", "{6AEDB7C7-E2E8-47CA-87D8-4BA13F1BF125}"
 	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-3\prometheus-chart\grafana_configmap.yaml = k8s-manifests\hw-3\prometheus-chart\grafana_configmap.yaml
+		k8s-manifests\hw-3\prometheus-chart\grafana_dashboard.json = k8s-manifests\hw-3\prometheus-chart\grafana_dashboard.json
 		k8s-manifests\hw-3\prometheus-chart\values.yaml = k8s-manifests\hw-3\prometheus-chart\values.yaml
 	EndProjectSection
 EndProject

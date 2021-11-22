@@ -46,6 +46,14 @@ namespace Otus.Project.CrudApi.Controllers
             }
         }
 
+        [HttpGet("emulateError")]
+        public async Task<IActionResult> GetError()
+        {
+            _logger.LogInformation("'Get Error' action has been requested");
+            await Task.CompletedTask;
+            return StatusCode(500);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserModel newUser, CancellationToken ct)
         {

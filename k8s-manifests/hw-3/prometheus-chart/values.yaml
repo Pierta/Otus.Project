@@ -5,3 +5,9 @@ prometheus:
 
 prometheus-node-exporter:
   hostRootFsMount: false
+
+grafana:
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana-dashboard

@@ -5,12 +5,6 @@
 
 Prerequisites:
 ```console
-# https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
-# if you don't have ingress-nginx installed, uncomment the line below and run in a console
-#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
-# delete ingress-nginx after testing is done, uncomment the line below and run in a console
-#kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
-
 # if a bitnami repo is not added yet, uncomment the line below and run in a console
 #helm repo add bitnami https://charts.bitnami.com/bitnami
 # if a prometheus-community repo is not added yet, uncomment the line below and run in a console
@@ -28,6 +22,10 @@ Prerequisites:
 
 How to run hw #1:
 ```console
+# https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+# if you don't have ingress-nginx installed, uncomment the line below and run in a console
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
+
 # install an application with '/health' endpoint
 kubectl apply -f k8s-manifests/hw-1/main-api.yaml
 ```
@@ -40,12 +38,19 @@ curl http://arch.homework/otusapp/{student_name}/home/hello # will be forwarded 
 
 # remove all the resources
 kubectl delete -f k8s-manifests/hw-1/main-api.yaml
+
+# delete ingress-nginx after testing is done, uncomment the line below and run in a console
+#kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
 ```
 
 ---
 
 How to run hw #2:
 ```console
+# https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+# if you don't have ingress-nginx installed, uncomment the line below and run in a console
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
+
 cd k8s-manifests/hw-2/
 # install postgres instance with metrics exporter
 helm install db bitnami/postgresql -f postgres-chart/values.yaml --namespace otus-project --create-namespace --atomic
@@ -64,6 +69,9 @@ newman run postman_collection.json
 
 # remove all the resources
 kubectl delete namespace otus-project
+
+# delete ingress-nginx after testing is done, uncomment the line below and run in a console
+#kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
 ```
 
 ---
@@ -76,8 +84,9 @@ helm install prometheus prometheus-community/kube-prometheus-stack -f prometheus
 # install ingress-nginx with enabled service monitor
 helm install nginx ingress-nginx/ingress-nginx -f ingress-nginx-chart/values.yaml --namespace otus-project --atomic
 
-#import the following dashboard to grafana via configmap
-#k8s-manifests/hw-3/grafana_dashboard.json
+# import the following dashboard to grafana via configmap
+# k8s-manifests/hw-3/prometheus-chart/grafana_dashboard.json
+kubectl apply -f prometheus-chart/grafana_configmap.yaml --namespace otus-project
 
 cd ../hw-2/
 # install postgres instance with metrics exporter
@@ -93,6 +102,9 @@ kubectl port-forward service/prometheus-grafana -n otus-project 9000:80
 
 How to test hw #3:
 ```console
+# run a simple load test
+ab -n 5000 -c 5 http://arch.homework/users
+
 # remove all the resources
 kubectl delete namespace otus-project
 kubectl delete crd alertmanagerconfigs.monitoring.coreos.com
