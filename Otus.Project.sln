@@ -68,6 +68,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ingress-nginx-chart", "ingr
 		k8s-manifests\hw-3\ingress-nginx-chart\values.yaml = k8s-manifests\hw-3\ingress-nginx-chart\values.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-4", "hw-4", "{1C2F3222-FE66-4E92-87B0-2006C05C709E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test-api", "test-api", "{AECE64C1-FE33-4585-B23B-7AFD3AC554EA}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-4\test-api\two_versions_of_api.yaml = k8s-manifests\hw-4\test-api\two_versions_of_api.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "istio-gateway", "istio-gateway", "{AF1AB557-1146-47FF-B447-9A928D8D8C7E}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-4\istio-gateway\manifest.yaml = k8s-manifests\hw-4\istio-gateway\manifest.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +120,9 @@ Global
 		{69BCB07E-FAA0-4F94-80C9-736C6F34B4DB} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
 		{6AEDB7C7-E2E8-47CA-87D8-4BA13F1BF125} = {69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}
 		{58539CD0-3C34-481A-949E-B7B5D3DDF004} = {69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}
+		{1C2F3222-FE66-4E92-87B0-2006C05C709E} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
+		{AECE64C1-FE33-4585-B23B-7AFD3AC554EA} = {1C2F3222-FE66-4E92-87B0-2006C05C709E}
+		{AF1AB557-1146-47FF-B447-9A928D8D8C7E} = {1C2F3222-FE66-4E92-87B0-2006C05C709E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}
