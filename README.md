@@ -11,8 +11,6 @@ Prerequisites:
 #helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 # if a ingress-nginx repo is not added yet, uncomment the line below and run in a console
 #helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-# if a kiali repo is not added yet, uncomment the line below and run in a console
-#helm repo add kiali https://kiali.org/helm-charts
 # update newly added helm repos
 #helm repo update
 
@@ -144,13 +142,6 @@ How to test hw #4:
 ```console
 # run a simple load test
 ab -n 500 -c 2 localhost/health
-
-protos=( destinationrules virtualservices gateways )
-for proto in "${protos[@]}"; do
-  for resource in $(kubectl get -n ${NAMESPACE} "$proto" -o name); do
-    kubectl delete -n ${NAMESPACE} "$resource";
-  done
-done
 
 # remove all the resources
 kubectl delete -f test-api/two_versions_of_api.yaml
