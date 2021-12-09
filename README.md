@@ -151,3 +151,35 @@ kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.12/sam
 istioctl x uninstall --purge
 kubectl delete namespace istio-system
 ```
+
+---
+
+How to run hw #5:
+```console
+# https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+# if you don't have ingress-nginx installed, uncomment the line below and run in a console
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
+
+cd k8s-manifests/hw-2/
+# install postgres instance
+helm install db bitnami/postgresql -f postgres-chart/values.yaml --namespace otus-project --create-namespace --atomic
+# install an application with crud api for managing users
+helm install crud-api crud-api-chart/ --namespace otus-project --atomic
+
+cd k8s-manifests/hw-5/
+# install auth api
+helm install auth-api auth-api-chart/ --namespace otus-project --atomic
+# install ingresses for crud api and auth api (ns = otus-project)
+kubectl apply -f nginx-ingress/manifest.yaml
+```
+
+How to test hw #5:
+```console
+newman run postman_collection.json
+
+# remove all the resources
+kubectl delete namespace otus-project
+
+# delete ingress-nginx after testing is done, uncomment the line below and run in a console
+#kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
+```

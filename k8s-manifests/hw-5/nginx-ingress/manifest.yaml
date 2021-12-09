@@ -1,0 +1,41 @@
+﻿---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crud-api
+  namespace: otus-project
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: http://auth-api.otus-project.svc.cluster.local/auth/nginx
+    #nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - http:
+        paths:
+          - path: / # Направляем все запросы к crud-api
+            pathType: Prefix
+            backend:
+              service:
+                name: crud-api
+                port:
+                  number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth-api
+  namespace: otus-project
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /auth(/|$)(.*) # Направляем все запросы /auth к auth-api. Создаем отдельный Ingress из-за аннотаций rewrite
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-api
+                port:
+                  number: 80
