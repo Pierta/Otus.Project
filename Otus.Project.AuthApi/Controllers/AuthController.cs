@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Otus.Project.AuthApi.Model;
 using Otus.Project.AuthApi.Services;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +21,18 @@ namespace Otus.Project.AuthApi.Controllers
         {
             _logger = logger;
             _userService = userService;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserModel model, CancellationToken ct)
+        {
+            var (response, errorMessage) = await _userService.Register(model, ct);
+            if (response == null)
+            {
+                return BadRequest(errorMessage);
+            }
+
+            return Ok(response);
         }
 
         [HttpPost("login")]

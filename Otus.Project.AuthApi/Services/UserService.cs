@@ -25,6 +25,25 @@ namespace Otus.Project.AuthApi.Services
             _userRepository = userRepository;
         }
 
+        public async Task<(Guid?, string)> Register(UserModel model, CancellationToken ct)
+        {
+            var newUser = model.ConvertToDomainModel();
+            if (string.IsNullOrEmpty(newUser.Email) || string.IsNullOrEmpty(newUser.Password))
+            {
+                return (null, "Email and Password must be provided!");
+            }
+
+            var existingUser = await _userRepository.FindByExpression(u => u.Email.ToLower() == newUser.Email.ToLower());
+            if (existingUser != null)
+            {
+                return (null, "There is another existing user with such an Email!");
+            }
+            
+            _userRepository.Add(newUser);
+            await _userRepository.CommitChangesAsync(ct);
+            return (newUser.Id, null);
+        }
+
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model, CancellationToken ct)
         {
             var user = await _userRepository.FindByExpression(x => 
