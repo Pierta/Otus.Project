@@ -154,6 +154,9 @@ kubectl delete namespace istio-system
 
 ---
 
+hw #5 schema:
+![schema](./k8s-manifests/hw-5/schema.png)
+
 How to run hw #5:
 ```console
 # https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
