@@ -78,7 +78,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-5", "hw-5", "{C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}"
 	ProjectSection(SolutionItems) = preProject
 		k8s-manifests\hw-5\postman_collection.json = k8s-manifests\hw-5\postman_collection.json
-		k8s-manifests\hw-5\Readme.md = k8s-manifests\hw-5\Readme.md
+		k8s-manifests\hw-5\schema.plantuml = k8s-manifests\hw-5\schema.plantuml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-api-chart", "auth-api-chart", "{AA730BB2-FACD-4CEE-BA85-185115E5C713}"
