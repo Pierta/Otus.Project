@@ -1,0 +1,132 @@
+$ newman run postman_collection.json
+newman
+
+Otus.Project
+
+□ Auth API
+└ Generate random variables
+  POST https://postman-echo.com/post [200 OK, 1.24kB, 614ms]
+  ┌
+  │ 'Response:', {
+  │   email: '20d5943e-07de-4f45-b7d7-1089fa94a9b4@magenta.com',
+  │   password: 'f7afa5b4-3e67-4e7e-aaaf-b2ebbf3250e6',
+  │   email2: 'bc56116a-646e-4551-b753-077d5c5db233@ivory.com',
+  │   password2: '65396a32-2b21-4d66-ad06-cf765dd89361'
+  │ }
+  └
+
+└ Register
+  POST http://arch.homework/auth/register [200 OK, 200B, 165ms]
+  ┌
+  │ 'Request:', '{\r\n' +
+  │   '    "email": "20d5943e-07de-4f45-b7d7-1089fa94a9b4@magenta.com",\r\n' +
+  │   '    "password": "f7afa5b4-3e67-4e7e-aaaf-b2ebbf3250e6",\r\n' +
+  │   '    "firstName": "some",\r\n' +
+  │   '    "lastName": "bla",\r\n' +
+  │   '    "middleName": "man",\r\n' +
+  │   '    "cellPhone": "111-222-3333",\r\n' +
+  │   '    "isEmailNotificationEnabled": true    \r\n' +
+  │   '}'
+  │ 'Response:', 'b5be034a-2ae1-462b-97c8-f155dd8fa6b0'
+  └
+
+└ Get User by id (non-auth)
+  GET http://arch.homework/secure/users/b5be034a-2ae1-462b-97c8-f155dd8fa6b0 [401 Unauthorized, 334B, 10ms]
+  √  Request is non authorized with a status code of 401
+
+└ Login
+  POST http://arch.homework/auth/login [200 OK, 376B, 676ms]
+  √  Request is successful with a status code of 200
+  ┌
+  │ 'Request:', '{\r\n    "email": "20d5943e-07de-4f45-b7d7-1089fa94a9b4@magenta.com",\r\n    "password": "f7afa5b4-3e67-4e7e-aaaf-b2ebbf3250e6"\r\n}'
+  │ 'Response:', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1YmUwMzRhLTJhZTEtNDYyYi05N2M4LWYxNTVkZDhmYTZiMCIsIm5iZiI6MTYzOTIxMzkxOSwiZXhwIjoxNjM5MzAwMzE5LCJpYXQiOjE2MzkyMTM
+  │ 5MTl9.RyyKl_wJ28Zumqskwv29wW66rePSJQhNzfJGk2PCcYk'
+  └
+
+└ Check auth
+  GET http://arch.homework/auth [200 OK, 164B, 8ms]
+  ┌
+  │ 'Response:', 'Token is valid!'
+  └
+
+└ Update an existing User
+  PUT http://arch.homework/secure/users/b5be034a-2ae1-462b-97c8-f155dd8fa6b0 [200 OK, 183B, 533ms]
+  ┌
+  │ 'Request:', '{\r\n' +
+  │   '    "createdDate": "2021-12-10T11:25:52.623Z",\r\n' +
+  │   '    "updatedDate": "2021-12-10T11:25:52.623Z",\r\n' +
+  │   '    "email": "20d5943e-07de-4f45-b7d7-1089fa94a9b4@magenta.com",\r\n' +
+  │   '    "password": "f7afa5b4-3e67-4e7e-aaaf-b2ebbf3250e6",    \r\n' +
+  │   '    "firstName": "another",\r\n' +
+  │   '    "lastName": "bla",\r\n' +
+  │   '    "middleName": "man",\r\n' +
+  │   '    "cellPhone": "111-222-3333",\r\n' +
+  │   '    "isEmailNotificationEnabled": true\r\n' +
+  │   '}'
+  │ 'Response:', 'User another bla has been updated!'
+  └
+
+└ Get User by id (auth)
+  GET http://arch.homework/secure/users/b5be034a-2ae1-462b-97c8-f155dd8fa6b0 [200 OK, 458B, 661ms]
+  √  Request is successful with a status code of 200
+  √  Check that it returns a new first name
+  ┌
+  │ 'Response:', {
+  │   id: 'b5be034a-2ae1-462b-97c8-f155dd8fa6b0',
+  │   createdDate: '2021-12-10T11:25:52.623',
+  │   updatedDate: '2021-12-10T11:25:52.623',
+  │   firstName: 'another',
+  │   lastName: 'bla',
+  │   middleName: 'man',
+  │   email: '20d5943e-07de-4f45-b7d7-1089fa94a9b4@magenta.com',
+  │   cellPhone: '111-222-3333',
+  │   isEmailNotificationEnabled: true
+  │ }
+  └
+
+└ Register 2nd user
+  POST http://arch.homework/auth/register [200 OK, 200B, 37ms]
+  ┌
+  │ 'Request:', '{\r\n' +
+  │   '    "email": "bc56116a-646e-4551-b753-077d5c5db233@ivory.com",\r\n' +
+  │   '    "password": "65396a32-2b21-4d66-ad06-cf765dd89361",\r\n' +
+  │   '    "firstName": "some2",\r\n' +
+  │   '    "lastName": "bla2",\r\n' +
+  │   '    "middleName": "man2",\r\n' +
+  │   '    "cellPhone": "222-333-4444",\r\n' +
+  │   '    "isEmailNotificationEnabled": true    \r\n' +
+  │   '}'
+  │ 'Response:', '{"id":"aeddc341-517b-47b3-81a8-3877f2ebe2a2"}'
+  └
+
+└ Login 2nd user
+  POST http://arch.homework/auth/login [200 OK, 376B, 13ms]
+  ┌
+  │ 'Request:', '{\r\n    "email": "bc56116a-646e-4551-b753-077d5c5db233@ivory.com",\r\n    "password": "65396a32-2b21-4d66-ad06-cf765dd89361"\r\n}'
+  │ 'Response:', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlZGRjMzQxLTUxN2ItNDdiMy04MWE4LTM4NzdmMmViZTJhMiIsIm5iZiI6MTYzOTIxMzkyMSwiZXhwIjoxNjM5MzAwMzIxLCJpYXQiOjE2MzkyMTM
+  │ 5MjF9.v-tadJxDcmvPkvPVe9YX2607dFHlsEzt9-BAyPn9ACw'
+  └
+
+└ Get User1 by id (auth) with token for User2
+  GET http://arch.homework/secure/users/b5be034a-2ae1-462b-97c8-f155dd8fa6b0 [403 Forbidden, 106B, 12ms]
+  √  Request is forbidden with a status code of 403
+
+┌─────────────────────────┬────────────────────┬───────────────────┐
+│                         │           executed │            failed │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              iterations │                  1 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│                requests │                 10 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│            test-scripts │                 20 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│      prerequest-scripts │                 12 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              assertions │                  5 │                 0 │
+├─────────────────────────┴────────────────────┴───────────────────┤
+│ total run duration: 3.7s                                         │
+├──────────────────────────────────────────────────────────────────┤
+│ total data received: 1.96kB (approx)                             │
+├──────────────────────────────────────────────────────────────────┤
+│ average response time: 272ms [min: 8ms, max: 676ms, s.d.: 289ms] │
+└──────────────────────────────────────────────────────────────────┘

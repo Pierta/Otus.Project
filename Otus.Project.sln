@@ -76,15 +76,46 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "istio-gateway", "istio-gate
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-5", "hw-5", "{C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx-ingress", "nginx-ingress", "{C433BC99-B089-4C29-8975-6914D48C45C6}"
 	ProjectSection(SolutionItems) = preProject
-		k8s-manifests\hw-5\nginx-ingress\manifest.yaml = k8s-manifests\hw-5\nginx-ingress\manifest.yaml
+		k8s-manifests\hw-5\postman_collection.json = k8s-manifests\hw-5\postman_collection.json
+		k8s-manifests\hw-5\Readme.md = k8s-manifests\hw-5\Readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-api-chart", "auth-api-chart", "{AA730BB2-FACD-4CEE-BA85-185115E5C713}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-5\auth-api-chart\Chart.yaml = k8s-manifests\hw-5\auth-api-chart\Chart.yaml
+		k8s-manifests\hw-5\auth-api-chart\values.yaml = k8s-manifests\hw-5\auth-api-chart\values.yaml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.AuthApi", "Otus.Project.AuthApi\Otus.Project.AuthApi.csproj", "{B7838A37-3AAA-4489-BE9D-C58596938EAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{B32B43E7-1FDC-495E-BCF8-EC4233D5E214}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-5\auth-api-chart\templates\config.yaml = k8s-manifests\hw-5\auth-api-chart\templates\config.yaml
+		k8s-manifests\hw-5\auth-api-chart\templates\deployment.yaml = k8s-manifests\hw-5\auth-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-5\auth-api-chart\templates\ingress.yaml = k8s-manifests\hw-5\auth-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-5\auth-api-chart\templates\service.yaml = k8s-manifests\hw-5\auth-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crud-api-chart", "crud-api-chart", "{EAB81FFD-4B37-4C5B-A331-4425ADB00EE9}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-5\crud-api-chart\Chart.yaml = k8s-manifests\hw-5\crud-api-chart\Chart.yaml
+		k8s-manifests\hw-5\crud-api-chart\values.yaml = k8s-manifests\hw-5\crud-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres-chart", "postgres-chart", "{13C368A9-F1C0-447E-9577-DA9AEB934F6F}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-5\postgres-chart\values.yaml = k8s-manifests\hw-5\postgres-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{C029201C-0BE8-47F5-B6AA-1553E7973A84}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-5\crud-api-chart\templates\config.yaml = k8s-manifests\hw-5\crud-api-chart\templates\config.yaml
+		k8s-manifests\hw-5\crud-api-chart\templates\deployment.yaml = k8s-manifests\hw-5\crud-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-5\crud-api-chart\templates\ingress.yaml = k8s-manifests\hw-5\crud-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-5\crud-api-chart\templates\job.yaml = k8s-manifests\hw-5\crud-api-chart\templates\job.yaml
+		k8s-manifests\hw-5\crud-api-chart\templates\service.yaml = k8s-manifests\hw-5\crud-api-chart\templates\service.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,9 +164,12 @@ Global
 		{AECE64C1-FE33-4585-B23B-7AFD3AC554EA} = {1C2F3222-FE66-4E92-87B0-2006C05C709E}
 		{AF1AB557-1146-47FF-B447-9A928D8D8C7E} = {1C2F3222-FE66-4E92-87B0-2006C05C709E}
 		{C94DBAA3-3141-4E07-A2AE-EA9C5DD20961} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
-		{C433BC99-B089-4C29-8975-6914D48C45C6} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
 		{AA730BB2-FACD-4CEE-BA85-185115E5C713} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
 		{B7838A37-3AAA-4489-BE9D-C58596938EAE} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{B32B43E7-1FDC-495E-BCF8-EC4233D5E214} = {AA730BB2-FACD-4CEE-BA85-185115E5C713}
+		{EAB81FFD-4B37-4C5B-A331-4425ADB00EE9} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
+		{13C368A9-F1C0-447E-9577-DA9AEB934F6F} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
+		{C029201C-0BE8-47F5-B6AA-1553E7973A84} = {EAB81FFD-4B37-4C5B-A331-4425ADB00EE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

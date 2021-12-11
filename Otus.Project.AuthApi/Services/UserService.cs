@@ -25,7 +25,7 @@ namespace Otus.Project.AuthApi.Services
             _userRepository = userRepository;
         }
 
-        public async Task<(Guid?, string)> Register(UserModel model, CancellationToken ct)
+        public async Task<(UserIdVm, string)> Register(UserModel model, CancellationToken ct)
         {
             var newUser = model.ConvertToDomainModel();
             if (string.IsNullOrEmpty(newUser.Email) || string.IsNullOrEmpty(newUser.Password))
@@ -41,7 +41,7 @@ namespace Otus.Project.AuthApi.Services
             
             _userRepository.Add(newUser);
             await _userRepository.CommitChangesAsync(ct);
-            return (newUser.Id, null);
+            return (new UserIdVm { Id = newUser.Id }, null);
         }
 
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model, CancellationToken ct)

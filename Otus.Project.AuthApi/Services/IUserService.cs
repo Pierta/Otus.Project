@@ -7,7 +7,7 @@ namespace Otus.Project.AuthApi.Services
 {
     public interface IUserService
     {
-        Task<(Guid?, string)> Register(UserModel model, CancellationToken ct);
+        Task<(UserIdVm, string)> Register(UserModel model, CancellationToken ct);
 
         Task<AuthenticateResponse> Authenticate(AuthenticateRequest model, CancellationToken ct);
     }
