@@ -15,11 +15,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-1", "hw-1", "{FDB9E4EA-896C-46A6-BB00-7D6F171D5622}"
 	ProjectSection(SolutionItems) = preProject
 		k8s-manifests\hw-1\main-api.yaml = k8s-manifests\hw-1\main-api.yaml
+		k8s-manifests\hw-1\README.md = k8s-manifests\hw-1\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-2", "hw-2", "{62192023-EA97-49E0-80DE-E95F0824C7B9}"
 	ProjectSection(SolutionItems) = preProject
 		k8s-manifests\hw-2\postman_collection.json = k8s-manifests\hw-2\postman_collection.json
+		k8s-manifests\hw-2\README.md = k8s-manifests\hw-2\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.CrudApi", "Otus.Project.CrudApi\Otus.Project.CrudApi.csproj", "{A800B9D8-9657-4179-B324-BA784D641124}"
@@ -50,6 +52,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres-chart", "postgres-
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-3", "hw-3", "{69BCB07E-FAA0-4F94-80C9-736C6F34B4DB}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-3\README.md = k8s-manifests\hw-3\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus-chart", "prometheus-chart", "{6AEDB7C7-E2E8-47CA-87D8-4BA13F1BF125}"
 	ProjectSection(SolutionItems) = preProject
@@ -64,6 +69,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ingress-nginx-chart", "ingr
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-4", "hw-4", "{1C2F3222-FE66-4E92-87B0-2006C05C709E}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-4\README.md = k8s-manifests\hw-4\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test-api", "test-api", "{AECE64C1-FE33-4585-B23B-7AFD3AC554EA}"
 	ProjectSection(SolutionItems) = preProject
@@ -78,6 +86,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-5", "hw-5", "{C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}"
 	ProjectSection(SolutionItems) = preProject
 		k8s-manifests\hw-5\postman_collection.json = k8s-manifests\hw-5\postman_collection.json
+		k8s-manifests\hw-5\README.md = k8s-manifests\hw-5\README.md
 		k8s-manifests\hw-5\schema.plantuml = k8s-manifests\hw-5\schema.plantuml
 	EndProjectSection
 EndProject
@@ -87,7 +96,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-api-chart", "auth-api-
 		k8s-manifests\hw-5\auth-api-chart\values.yaml = k8s-manifests\hw-5\auth-api-chart\values.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.AuthApi", "Otus.Project.AuthApi\Otus.Project.AuthApi.csproj", "{B7838A37-3AAA-4489-BE9D-C58596938EAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.AuthApi", "Otus.Project.AuthApi\Otus.Project.AuthApi.csproj", "{B7838A37-3AAA-4489-BE9D-C58596938EAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{B32B43E7-1FDC-495E-BCF8-EC4233D5E214}"
 	ProjectSection(SolutionItems) = preProject
@@ -117,6 +126,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		k8s-manifests\hw-5\crud-api-chart\templates\service.yaml = k8s-manifests\hw-5\crud-api-chart\templates\service.yaml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.BillingApi", "Otus.Project.BillingApi\Otus.Project.BillingApi.csproj", "{002F1A27-A090-47A8-AB69-D56ABBE87FFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-6", "hw-6", "{593CF09E-A9D5-479C-A0BF-10E14C9650C9}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\README.md = k8s-manifests\hw-6\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +159,10 @@ Global
 		{B7838A37-3AAA-4489-BE9D-C58596938EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7838A37-3AAA-4489-BE9D-C58596938EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7838A37-3AAA-4489-BE9D-C58596938EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002F1A27-A090-47A8-AB69-D56ABBE87FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002F1A27-A090-47A8-AB69-D56ABBE87FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002F1A27-A090-47A8-AB69-D56ABBE87FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002F1A27-A090-47A8-AB69-D56ABBE87FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -170,6 +190,8 @@ Global
 		{EAB81FFD-4B37-4C5B-A331-4425ADB00EE9} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
 		{13C368A9-F1C0-447E-9577-DA9AEB934F6F} = {C94DBAA3-3141-4E07-A2AE-EA9C5DD20961}
 		{C029201C-0BE8-47F5-B6AA-1553E7973A84} = {EAB81FFD-4B37-4C5B-A331-4425ADB00EE9}
+		{002F1A27-A090-47A8-AB69-D56ABBE87FFF} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{593CF09E-A9D5-479C-A0BF-10E14C9650C9} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

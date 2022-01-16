@@ -1,0 +1,54 @@
+# Otus.Project
+📚 Homework #4
+
+---
+
+Prerequisites:
+```console
+# if a bitnami repo is not added yet, uncomment the line below and run in a console
+#helm repo add bitnami https://charts.bitnami.com/bitnami
+# if a prometheus-community repo is not added yet, uncomment the line below and run in a console
+#helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+# if a ingress-nginx repo is not added yet, uncomment the line below and run in a console
+#helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+# update newly added helm repos
+#helm repo update
+
+# if you don't have newman installed, uncomment the line below and run in a console
+#npm install -g newman
+```
+
+---
+
+How to run hw #4:
+```console
+cd k8s-manifests/hw-4/
+# install istio
+istioctl install --set profile=demo -y
+# install prometheus
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/prometheus.yaml
+# install kiali
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/kiali.yaml
+# enable istio sidecar injection for default ns
+kubectl label namespace default istio-injection=enabled
+# install test-api
+kubectl apply -f test-api/two_versions_of_api.yaml
+# install istio-gateway
+kubectl apply -f istio-gateway/manifest.yaml
+# run kiali dashboard
+istioctl dashboard kiali
+```
+
+How to test hw #4:
+```console
+# run a simple load test
+ab -n 500 -c 2 localhost/health
+
+# remove all the resources
+kubectl delete -f test-api/two_versions_of_api.yaml
+kubectl delete -f istio-gateway/manifest.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/prometheus.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/kiali.yaml
+istioctl x uninstall --purge
+kubectl delete namespace istio-system
+```
