@@ -135,6 +135,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-6", "hw-6", "{593CF09E-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.OrderApi", "Otus.Project.OrderApi\Otus.Project.OrderApi.csproj", "{CF2475AA-6FDE-4D64-84F1-C4098E61B296}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.NotificationApi", "Otus.Project.NotificationApi\Otus.Project.NotificationApi.csproj", "{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +171,10 @@ Global
 		{CF2475AA-6FDE-4D64-84F1-C4098E61B296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF2475AA-6FDE-4D64-84F1-C4098E61B296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF2475AA-6FDE-4D64-84F1-C4098E61B296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +205,7 @@ Global
 		{002F1A27-A090-47A8-AB69-D56ABBE87FFF} = {A6F1B505-8977-4499-B203-E77472EAF233}
 		{593CF09E-A9D5-479C-A0BF-10E14C9650C9} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
 		{CF2475AA-6FDE-4D64-84F1-C4098E61B296} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72} = {A6F1B505-8977-4499-B203-E77472EAF233}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}
