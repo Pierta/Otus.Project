@@ -33,7 +33,7 @@ namespace Otus.Project.AuthApi.Services
                 return (null, "Email and Password must be provided!");
             }
 
-            var existingUser = await _userRepository.FindByExpression(u => u.Email.ToLower() == newUser.Email.ToLower());
+            var existingUser = await _userRepository.FindByExpression(u => u.Email.ToLower() == newUser.Email.ToLower(), ct);
             if (existingUser != null)
             {
                 return (null, "There is another existing user with such an Email!");
@@ -48,7 +48,7 @@ namespace Otus.Project.AuthApi.Services
         {
             var user = await _userRepository.FindByExpression(x => 
                 x.Email == model.Email && 
-                x.Password == model.Password);
+                x.Password == model.Password, ct);
             if (user == null) return null;
 
             var token = GenerateJwtToken(user);

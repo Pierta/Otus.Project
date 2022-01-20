@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -50,14 +51,15 @@ namespace Otus.Project.Orm.Repository
             return await Entities.FindAsync(new object[] { id }, cancellationToken: ct);
         }
 
-        public Task<TEntity> FindByExpression(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> FindByExpression(Expression<Func<TEntity, bool>> predicate, CancellationToken ct = default)
         {
-            return FindAll().SingleOrDefaultAsync(predicate);
+            return FindAll().SingleOrDefaultAsync(predicate, ct);
         }
 
-        public IQueryable<TEntity> FindAllByExpression(Expression<Func<TEntity, bool>> predicate)
+        public Task<List<TEntity>> FindAllByExpression(Expression<Func<TEntity, bool>> predicate, CancellationToken ct = default)
         {
-            return FindAll().Where(predicate);
+            return FindAll().Where(predicate)
+                .ToListAsync(ct);
         }
 
         public IQueryable<TEntity> FindAll()
@@ -67,16 +69,15 @@ namespace Otus.Project.Orm.Repository
 
         public async Task CommitChangesAsync(CancellationToken ct = default)
         {
-            using (var transaction = await dbContext.Database.BeginTransactionAsync(ct))
-            {
-                await dbContext.SaveChangesAsync(ct);
-                await transaction.CommitAsync(ct);
-            }
+            using var transaction = await dbContext.Database.BeginTransactionAsync(ct);
+            await dbContext.SaveChangesAsync(ct);
+            await transaction.CommitAsync(ct);
         }
 
         public void Dispose()
         {
             dbContext.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

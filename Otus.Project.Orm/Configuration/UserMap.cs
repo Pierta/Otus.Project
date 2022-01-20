@@ -7,20 +7,16 @@ namespace Otus.Project.Orm.Configuration
 {
     public class UserMap : IEntityTypeConfiguration<User>
     {
-        private readonly Guid TestUser1Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ae1");
-        private readonly Guid TestUser2Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ae2");
-        private readonly Guid TestUser3Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ae3");
-
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users").HasKey(i => i.Id);
 
-            var now = DateTime.Now;
+            var now = new DateTime(2022, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             builder.HasData(new User[]
             {
                 new User
                 {
-                    Id = TestUser1Id,
+                    Id = Constants.TestUser1Id,
                     CreatedDate = now,
                     UpdatedDate = now,
                     FirstName = "John",
@@ -33,7 +29,7 @@ namespace Otus.Project.Orm.Configuration
                 },
                 new User
                 {
-                    Id = TestUser2Id,
+                    Id = Constants.TestUser2Id,
                     CreatedDate = now,
                     UpdatedDate = now,
                     FirstName = "John",
@@ -46,7 +42,7 @@ namespace Otus.Project.Orm.Configuration
                 },
                 new User
                 {
-                    Id = TestUser3Id,
+                    Id = Constants.TestUser3Id,
                     CreatedDate = now,
                     UpdatedDate = now,
                     FirstName = "John",

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -18,9 +19,9 @@ namespace Otus.Project.Orm.Repository
 
         Task<T> FindByID(TId id, CancellationToken ct);
 
-        Task<T> FindByExpression(Expression<Func<T, bool>> predicate);
+        Task<T> FindByExpression(Expression<Func<T, bool>> predicate, CancellationToken ct);
 
-        IQueryable<T> FindAllByExpression(Expression<Func<T, bool>> predicate);
+        Task<List<T>> FindAllByExpression(Expression<Func<T, bool>> predicate, CancellationToken ct);
 
         IQueryable<T> FindAll();
 

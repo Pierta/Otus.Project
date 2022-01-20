@@ -19,6 +19,7 @@ namespace Otus.Project.Orm.Configuration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new BillingAccountMap());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,3 +1,5 @@
+using Medallion.Threading;
+using Medallion.Threading.Postgres;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.BillingApi.Services;
 using Otus.Project.BillingApi.Settings;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
@@ -59,6 +62,7 @@ namespace Otus.Project.BillingApi
                 });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IDistributedLockProvider>(_ => new PostgresDistributedSynchronizationProvider(connection));
 
             services.AddControllers();
             services.AddHealthChecks()
@@ -97,7 +101,7 @@ namespace Otus.Project.BillingApi
 
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
-            // TODO: add service injection
+            services.AddScoped<IBillingAccountService, BillingAccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
