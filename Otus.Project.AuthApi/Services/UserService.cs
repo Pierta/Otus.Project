@@ -1,13 +1,8 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Otus.Project.AuthApi.Model;
-using Otus.Project.AuthApi.Settings;
+﻿using Otus.Project.AuthApi.Model;
 using Otus.Project.Domain.Model;
 using Otus.Project.Orm.Repository;
+using Polly;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,14 +10,22 @@ namespace Otus.Project.AuthApi.Services
 {
     public class UserService : IUserService
     {
-        private readonly AppSettings _appSettings;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IRepository<User, Guid> _userRepository;
+        private readonly IBillingApiClient _billingApiClient;
+        private readonly AsyncPolicy _asyncClientServicePolicy;
 
-        public UserService(IOptions<AppSettings> appSettings,
-            IRepository<User, Guid> userRepository)
+        public UserService(IJwtTokenGenerator jwtTokenGenerator,
+            IRepository<User, Guid> userRepository,
+            IBillingApiClient billingApiClient)
         {
-            _appSettings = appSettings.Value;
+            _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _billingApiClient = billingApiClient;
+
+            _asyncClientServicePolicy = Policy
+                .Handle<TaskCanceledException>()
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(3, retryAttempt)));
         }
 
         public async Task<(UserIdVm, string)> Register(UserModel model, CancellationToken ct)
@@ -41,6 +44,14 @@ namespace Otus.Project.AuthApi.Services
             
             _userRepository.Add(newUser);
             await _userRepository.CommitChangesAsync(ct);
+
+            // Create billing account:
+            // 3 retry attempts will be performed
+            await _asyncClientServicePolicy.ExecuteAsync(async () =>
+            {
+                await _billingApiClient.CreateNewBillingAccount(newUser.Id, ct);
+            });
+
             return (new UserIdVm { Id = newUser.Id }, null);
         }
 
@@ -51,24 +62,9 @@ namespace Otus.Project.AuthApi.Services
                 x.Password == model.Password, ct);
             if (user == null) return null;
 
-            var token = GenerateJwtToken(user);
+            var token = _jwtTokenGenerator.GenerateJwtToken(user.Id);
 
             return new AuthenticateResponse { Token = token };
-        }
-
-        private string GenerateJwtToken(User user)
-        {
-            var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
     }
 }

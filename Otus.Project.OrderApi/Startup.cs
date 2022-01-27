@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.OrderApi.Extensions;
 using Otus.Project.OrderApi.Settings;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
@@ -114,6 +115,8 @@ namespace Otus.Project.OrderApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ContextMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

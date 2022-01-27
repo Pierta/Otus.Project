@@ -36,7 +36,7 @@ namespace Otus.Project.BillingApi.Controllers
             var userIdFromToken = (Guid?)_httpContextAccessor.HttpContext.Items["UserId"];
             try
             {
-                var user = await _billingAccountService.GetCurrentBalance(userIdFromToken.Value, ct);
+                var user = await _billingAccountService.CreateNewBillingAccountIfNotExist(userIdFromToken.Value, ct);
                 return Ok(user);
             }
             catch (Exception ex)

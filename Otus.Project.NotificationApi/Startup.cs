@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.NotificationApi.Extensions;
 using Otus.Project.NotificationApi.Settings;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
@@ -114,6 +115,8 @@ namespace Otus.Project.NotificationApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ContextMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

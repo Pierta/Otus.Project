@@ -92,10 +92,13 @@ namespace Otus.Project.AuthApi
             });
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<ExternalServices>(Configuration.GetSection("ExternalServices"));
 
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBillingApiClient, BillingApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.BillingApi.Extensions;
 using Otus.Project.BillingApi.Services;
 using Otus.Project.BillingApi.Settings;
 using Otus.Project.Orm.Configuration;
@@ -118,6 +119,8 @@ namespace Otus.Project.BillingApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ContextMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
