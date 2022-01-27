@@ -1,0 +1,1 @@
+docker-compose -f docker-compose.rabbit.yml up -d

@@ -30,6 +30,27 @@ namespace Otus.Project.AuthApi.Services
 
         public async Task<(UserIdVm, string)> Register(UserModel model, CancellationToken ct)
         {
+            var (newUser, errorMessage) = await RegisterInternal(model, ct);
+
+            return (newUser, errorMessage);
+        }
+
+        public async Task<(UserIdVm, string)> RegisterAndCreateBillingAccount(UserModel model, CancellationToken ct)
+        {
+            var (newUser, errorMessage) = await RegisterInternal(model, ct);
+
+            // Create billing account:
+            // 3 retry attempts will be performed
+            await _asyncClientServicePolicy.ExecuteAsync(async () =>
+            {
+                await _billingApiClient.CreateNewBillingAccount(newUser.Id, ct);
+            });
+
+            return (newUser, errorMessage);
+        }
+
+        private async Task<(UserIdVm, string)> RegisterInternal(UserModel model, CancellationToken ct)
+        {
             var newUser = model.ConvertToDomainModel();
             if (string.IsNullOrEmpty(newUser.Email) || string.IsNullOrEmpty(newUser.Password))
             {
@@ -41,16 +62,9 @@ namespace Otus.Project.AuthApi.Services
             {
                 return (null, "There is another existing user with such an Email!");
             }
-            
+
             _userRepository.Add(newUser);
             await _userRepository.CommitChangesAsync(ct);
-
-            // Create billing account:
-            // 3 retry attempts will be performed
-            await _asyncClientServicePolicy.ExecuteAsync(async () =>
-            {
-                await _billingApiClient.CreateNewBillingAccount(newUser.Id, ct);
-            });
 
             return (new UserIdVm { Id = newUser.Id }, null);
         }
