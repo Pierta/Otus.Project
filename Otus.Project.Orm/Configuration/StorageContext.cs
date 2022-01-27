@@ -20,6 +20,10 @@ namespace Otus.Project.Orm.Configuration
         {
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new BillingAccountMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new OrderMap());
+            modelBuilder.ApplyConfiguration(new OrderProductsMap());
+            modelBuilder.ApplyConfiguration(new NotificationMap());
 
             base.OnModelCreating(modelBuilder);
         }

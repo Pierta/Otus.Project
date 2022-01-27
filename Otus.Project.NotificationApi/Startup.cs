@@ -1,3 +1,5 @@
+using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,12 +12,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Otus.Project.NotificationApi.Extensions;
+using Otus.Project.NotificationApi.Services;
 using Otus.Project.NotificationApi.Settings;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
 using Prometheus;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Otus.Project.NotificationApi
@@ -95,10 +99,25 @@ namespace Otus.Project.NotificationApi
             });
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
+            
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
-            // TODO: add service injection
+            services.AddScoped<INotificationService, NotificationService>();
+
+            // service bus dispatcher infrastructure configuration
+            var serviceBusConnection = Configuration["ServiceBusSettings:Connection"];
+            services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
+            services.AddSingleton<MessageDispatcher>();
+            services.AddSingleton(provider =>
+            {
+                return new AutoSubscriber(provider.GetRequiredService<IBus>(), ServiceBusConsumer.SubscriptionIdPrefix)
+                {
+                    AutoSubscriberMessageDispatcher = provider.GetRequiredService<MessageDispatcher>()
+                };
+            });
+
+            // message handlers registration
+            services.AddScoped<ServiceBusConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -133,6 +152,8 @@ namespace Otus.Project.NotificationApi
                     Predicate = check => check.Tags.Contains(Readiness)
                 });
             });
+
+            app.ApplicationServices.GetRequiredService<AutoSubscriber>().SubscribeAsync(new[] { Assembly.GetExecutingAssembly() });
         }
     }
 }

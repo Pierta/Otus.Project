@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Otus.Project.Domain.Model
+﻿namespace Otus.Project.Domain.Model
 {
     public class User : BaseEntity
     {
