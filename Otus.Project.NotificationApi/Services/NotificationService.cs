@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Otus.Project.Domain.Model;
-using Otus.Project.NotificationApi.Contracts;
 using Otus.Project.NotificationApi.Model;
 using Otus.Project.Orm.Repository;
 using System;
@@ -26,7 +25,7 @@ namespace Otus.Project.NotificationApi.Services
             Expression<Func<Notification, bool>> selectByUserIdSpec = notification => notification.UserId == userId;            
             var userNotifications = await _notificationRepository.FindAll()
                 .Where(selectByUserIdSpec)
-                .OrderBy(n => n.CreatedDate)
+                .OrderByDescending(n => n.CreatedDate)
                 .Select(n => n.ConvertToVm())
                 .ToListAsync(ct);
 

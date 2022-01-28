@@ -2,7 +2,7 @@
 
 namespace Otus.Project.NotificationApi.Contracts
 {
-    public class NotificationModel
+    public class OrderCreated
     {        
         public Guid UserId { get; set; }
 

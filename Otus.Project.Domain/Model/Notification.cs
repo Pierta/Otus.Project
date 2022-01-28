@@ -13,6 +13,8 @@ namespace Otus.Project.Domain.Model
         public Guid OrderId { get; set; }
         public virtual Order Order { get; set; }
 
+        public string EventType { get; set; }
+
         public string RecipientEmail { get; set; }
 
         public string Message { get; set; }

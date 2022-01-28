@@ -10,6 +10,8 @@ namespace Otus.Project.NotificationApi.Model
 
         public DateTime UpdatedDate { get; set; }
 
+        public string EventType { get; set; }
+
         public Guid UserId { get; set; }
 
         public string RecipientEmail { get; set; }

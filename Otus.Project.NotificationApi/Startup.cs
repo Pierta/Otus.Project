@@ -30,6 +30,8 @@ namespace Otus.Project.NotificationApi
         private const string Readiness = "Readiness";
         private const string HealthCheckSql = "SELECT 1 FROM User;";
 
+        private const string SubscriptionIdPrefix = "OrderNotification";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -111,14 +113,15 @@ namespace Otus.Project.NotificationApi
             services.AddSingleton<MessageDispatcher>();
             services.AddSingleton(provider =>
             {
-                return new AutoSubscriber(provider.GetRequiredService<IBus>(), ServiceBusConsumer.SubscriptionIdPrefix)
+                return new AutoSubscriber(provider.GetRequiredService<IBus>(), SubscriptionIdPrefix)
                 {
                     AutoSubscriberMessageDispatcher = provider.GetRequiredService<MessageDispatcher>()
                 };
             });
 
             // message handlers registration
-            services.AddScoped<ServiceBusConsumer>();
+            services.AddScoped<OrderCreatedConsumer>();
+            services.AddScoped<NotEnoughMoneyToMakeOrderConsumer>();
             // configure console logging for EasyNetQ
             LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
         }

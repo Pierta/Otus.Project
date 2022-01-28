@@ -1,5 +1,4 @@
 ﻿using Otus.Project.Domain.Model;
-using Otus.Project.NotificationApi.Contracts;
 using System;
 
 namespace Otus.Project.NotificationApi.Model
@@ -31,6 +30,7 @@ namespace Otus.Project.NotificationApi.Model
                 UpdatedDate = now,
                 UserId = notificationModel.UserId,
                 OrderId = notificationModel.OrderId,
+                EventType = notificationModel.EventType,
                 RecipientEmail = notificationModel.RecipientEmail,
                 Message = notificationModel.Message
             };
