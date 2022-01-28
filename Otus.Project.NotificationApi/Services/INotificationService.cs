@@ -1,4 +1,5 @@
-﻿using Otus.Project.NotificationApi.Model;
+﻿using Otus.Project.NotificationApi.Contracts;
+using Otus.Project.NotificationApi.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading;

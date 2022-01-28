@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Otus.Project.NotificationApi.Model
+namespace Otus.Project.NotificationApi.Contracts
 {
     public class NotificationModel
     {        

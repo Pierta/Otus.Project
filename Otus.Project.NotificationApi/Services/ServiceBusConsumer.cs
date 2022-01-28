@@ -1,5 +1,5 @@
 ﻿using EasyNetQ.AutoSubscribe;
-using Otus.Project.NotificationApi.Model;
+using Otus.Project.NotificationApi.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 

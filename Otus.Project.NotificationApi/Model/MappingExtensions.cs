@@ -1,4 +1,5 @@
 ﻿using Otus.Project.Domain.Model;
+using Otus.Project.NotificationApi.Contracts;
 using System;
 
 namespace Otus.Project.NotificationApi.Model

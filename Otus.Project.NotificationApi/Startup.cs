@@ -1,5 +1,6 @@
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
+using EasyNetQ.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -118,6 +119,8 @@ namespace Otus.Project.NotificationApi
 
             // message handlers registration
             services.AddScoped<ServiceBusConsumer>();
+            // configure console logging for EasyNetQ
+            LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

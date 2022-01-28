@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Otus.Project.Domain.Model;
+using Otus.Project.NotificationApi.Contracts;
 using Otus.Project.NotificationApi.Model;
 using Otus.Project.Orm.Repository;
 using System;
