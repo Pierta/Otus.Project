@@ -107,8 +107,10 @@ namespace Otus.Project.NotificationApi
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped<INotificationService, NotificationService>();
 
-            // service bus dispatcher infrastructure configuration
-            var serviceBusConnection = Configuration["ServiceBusSettings:Connection"];
+            // service bus infrastructure configuration
+            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_URI")
+                ?? Configuration["ServiceBusSettings:Connection"];
+
             services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
             services.AddSingleton<MessageDispatcher>();
             services.AddSingleton(provider =>
@@ -122,6 +124,7 @@ namespace Otus.Project.NotificationApi
             // message handlers registration
             services.AddScoped<OrderCreatedConsumer>();
             services.AddScoped<NotEnoughMoneyToMakeOrderConsumer>();
+
             // configure console logging for EasyNetQ
             LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
         }

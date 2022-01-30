@@ -40,7 +40,7 @@ namespace Otus.Project.BillingApi.Services
                 await _billingAccountRepository.CommitChangesAsync(ct);
             }
 
-            return MappingExtensions.ConvertToVm(existingBillingAccount);
+            return existingBillingAccount.ConvertToVm();
         }
 
         public async Task<decimal> GetCurrentBalance(Guid userId, CancellationToken ct)

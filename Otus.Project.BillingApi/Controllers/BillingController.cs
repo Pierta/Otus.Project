@@ -36,8 +36,8 @@ namespace Otus.Project.BillingApi.Controllers
             var userIdFromToken = (Guid?)_httpContextAccessor.HttpContext.Items["UserId"];
             try
             {
-                var user = await _billingAccountService.CreateNewBillingAccountIfNotExist(userIdFromToken.Value, ct);
-                return Ok(user);
+                var newBillingAccount = await _billingAccountService.CreateNewBillingAccountIfNotExist(userIdFromToken.Value, ct);
+                return Ok(newBillingAccount);
             }
             catch (Exception ex)
             {
@@ -53,8 +53,8 @@ namespace Otus.Project.BillingApi.Controllers
             var userIdFromToken = (Guid?)_httpContextAccessor.HttpContext.Items["UserId"];
             try
             {
-                var user = await _billingAccountService.GetCurrentBalance(userIdFromToken.Value, ct);
-                return Ok(user);
+                var currentBalance = await _billingAccountService.GetCurrentBalance(userIdFromToken.Value, ct);
+                return Ok(currentBalance);
             }
             catch (KeyNotFoundException ex)
             {

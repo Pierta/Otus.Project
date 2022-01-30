@@ -15,6 +15,6 @@ namespace Otus.Project.Domain.Model
         public bool IsPaid { get; set; }
 
         [InverseProperty(nameof(OrderProducts.Order))]
-        public List<OrderProducts> Products { get; set; }
+        public virtual List<OrderProducts> Products { get; set; }
     }
 }

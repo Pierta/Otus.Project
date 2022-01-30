@@ -1,3 +1,5 @@
+using EasyNetQ;
+using EasyNetQ.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Otus.Project.OrderApi.Extensions;
+using Otus.Project.OrderApi.Services;
 using Otus.Project.OrderApi.Settings;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
@@ -95,10 +98,21 @@ namespace Otus.Project.OrderApi
             });
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<ExternalServices>(Configuration.GetSection("ExternalServices"));
 
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
-            // TODO: add service injection
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IBillingApiClient, BillingApiClient>();
+
+            // service bus infrastructure configuration
+            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_URI")
+                ?? Configuration["ServiceBusSettings:Connection"];
+
+            services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
+
+            // configure console logging for EasyNetQ
+            LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

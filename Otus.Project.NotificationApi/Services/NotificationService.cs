@@ -25,6 +25,7 @@ namespace Otus.Project.NotificationApi.Services
             Expression<Func<Notification, bool>> selectByUserIdSpec = notification => notification.UserId == userId;            
             var userNotifications = await _notificationRepository.FindAll()
                 .Where(selectByUserIdSpec)
+                .Include(n => n.Order)
                 .OrderByDescending(n => n.CreatedDate)
                 .Select(n => n.ConvertToVm())
                 .ToListAsync(ct);
