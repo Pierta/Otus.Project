@@ -1,0 +1,146 @@
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  tag: 12.9.0-debian-10-r26
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  pullPolicy: IfNotPresent
+
+##
+## Init containers parameters:
+## volumePermissions: Change the owner of the persist volume mountpoint to RunAsUser:fsGroup
+##
+volumePermissions:
+  enabled: false
+
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+securityContext:
+  enabled: true
+  fsGroup: 1001
+
+## PostgreSQL admin password (used when `postgresqlUsername` is not `postgres`)
+## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-user-on-first-run (see note!)
+postgresqlPostgresPassword: super
+
+## PostgreSQL user (has superuser privileges if username is `postgres`)
+## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#setting-the-root-password-on-first-run
+postgresqlUsername: otus-user
+
+## PostgreSQL password
+## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#setting-the-root-password-on-first-run
+##
+postgresqlPassword: otus-pwd2021!
+
+## Create a database
+## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run
+##
+postgresqlDatabase: otus-db
+
+## PostgreSQL data dir
+## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md
+##
+postgresqlDataDir: /bitnami/postgresql/data
+
+## PostgreSQL configuration
+## Specify runtime configuration parameters as a dict, using camelCase, e.g.
+## {"sharedBuffers": "500MB"}
+## Alternatively, you can put your postgresql.conf under the files/ directory
+## ref: https://www.postgresql.org/docs/current/static/runtime-config.html
+##
+postgresqlConfiguration: {}
+
+## PostgreSQL service configuration
+service:
+  type: ClusterIP
+  port: 5432
+  externalTrafficPolicy: Cluster
+
+## PostgreSQL data Persistent Volume Storage Class
+## If defined, storageClassName: <storageClass>
+## If set to "-", storageClassName: "", which disables dynamic provisioning
+## If undefined (the default) or set to null, no storageClassName spec is
+##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+##   GKE, AWS & OpenStack)
+##
+persistence:
+  enabled: true
+  ## The path the volume will be mounted at, useful when using different
+  ## PostgreSQL images.
+  ##
+  mountPath: /bitnami/postgresql
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+## updateStrategy for PostgreSQL StatefulSet and its slaves StatefulSets
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+updateStrategy:
+  type: RollingUpdate
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+
+## Configure extra options for liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+## Configure metrics exporter
+##
+metrics:
+  enabled: false
+  service:
+    type: ClusterIP
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9187"
+    loadBalancerIP:
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+    # interval: 30s
+    # scrapeTimeout: 10s
+  image:
+    registry: docker.io
+    repository: bitnami/postgres-exporter
+    tag: 0.8.0-debian-10-r28
+    pullPolicy: IfNotPresent
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+  ## Configure extra options for liveness and readiness probes
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1

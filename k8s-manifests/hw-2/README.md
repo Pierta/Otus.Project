@@ -26,7 +26,6 @@ How to run hw #2:
 # if you don't have ingress-nginx installed, uncomment the line below and run in a console
 #kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
 
-cd k8s-manifests/hw-2/
 # install postgres instance with metrics exporter
 helm install db bitnami/postgresql -f postgres-chart/values.yaml --namespace otus-project --create-namespace --atomic
 # install an application with crud api for managing users

@@ -1,9 +1,17 @@
+job:
+  image:
+    repository: pierta/otus.project.crudapi
+    pullPolicy: Always
+    tag: "latest"
+    ## Should the job be rescheduled on the same node if it fails, or just stopped
+  restartPolicy: Never
+
 service:
   type: ClusterIP
   port: 8800
 
 image:
-  repository: pierta/otus.project.authapi
+  repository: pierta/otus.project.crudapi
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -26,14 +34,11 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-url: http://auth-api-auth-api-chart.otus-project.svc.cluster.local:8800/auth
   hosts:
     - host: arch.homework
       paths:
-        - path: /auth
-          pathType: Prefix
-        - path: /auth/login
-          pathType: Prefix
-        - path: /auth/register
+        - path: /
           pathType: Prefix
 
 externalPostgresql:

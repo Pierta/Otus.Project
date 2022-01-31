@@ -22,7 +22,6 @@ Prerequisites:
 
 How to run hw #3:
 ```console
-cd k8s-manifests/hw-3/
 # install prometheus stack
 helm install prometheus prometheus-community/kube-prometheus-stack -f prometheus-chart/values.yaml --namespace otus-project --create-namespace --atomic
 # install ingress-nginx with enabled service monitor

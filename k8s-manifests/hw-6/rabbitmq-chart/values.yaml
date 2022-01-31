@@ -1,0 +1,135 @@
+image:
+  registry: docker.io
+  repository: bitnami/rabbitmq
+  tag: 3.9.13-debian-10-r2
+  pullPolicy: IfNotPresent
+
+auth:
+  ## @param auth.username RabbitMQ application username
+  ## ref: https://github.com/bitnami/bitnami-docker-rabbitmq#environment-variables
+  username: rabbitmq
+  password: "rabbitmq"
+
+
+## @param plugins List of default plugins to enable (should only be altered to remove defaults; for additional plugins use `extraPlugins`)
+plugins: "rabbitmq_management rabbitmq_peer_discovery_k8s"
+extraPlugins: "rabbitmq_auth_backend_ldap"
+
+## @param terminationGracePeriodSeconds Default duration in seconds k8s waits for container to exit before sending kill signal.
+## Any time in excess of 10 seconds will be spent waiting for any synchronization necessary for cluster not to lose data.
+terminationGracePeriodSeconds: 120
+
+## @param configuration [string] RabbitMQ Configuration file content: required cluster configuration
+## Do not override unless you know what you are doing.
+## To add more configuration, use `extraConfiguration` of `advancedConfiguration` instead
+##
+configuration: |-
+  {{- if not .Values.loadDefinition.enabled -}}
+  ## Username and password
+  ##
+  default_user = {{ .Values.auth.username }}
+  default_pass = {{ .Values.auth.password }}
+  {{- end }}
+  # queue master locator
+  queue_master_locator = min-masters
+  # enable guest user
+  loopback_users.guest = false
+  {{ tpl .Values.extraConfiguration . }}
+  {{- if .Values.metrics.enabled }}
+  prometheus.tcp.port = 9419
+  {{- end }}
+
+## @param replicaCount Number of RabbitMQ replicas to deploy
+replicaCount: 1
+
+## RabbitMQ should be initialized one by one when building cluster for the first time.
+## Therefore, the default value of podManagementPolicy is 'OrderedReady'
+## Once the RabbitMQ participates in the cluster, it waits for a response from another
+## RabbitMQ in the same cluster at reboot, except the last RabbitMQ of the same cluster.
+## If the cluster exits gracefully, you do not need to change the podManagementPolicy
+## because the first RabbitMQ of the statefulset always will be last of the cluster.
+## However if the last RabbitMQ of the cluster is not the first RabbitMQ due to a failure,
+## you must change podManagementPolicy to 'Parallel'.
+## ref : https://www.rabbitmq.com/clustering.html#restarting
+## @param podManagementPolicy Pod management policy
+##
+podManagementPolicy: OrderedReady
+
+## @param updateStrategyType Update strategy type for RabbitMQ statefulset
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+##
+updateStrategyType: RollingUpdate
+
+## RabbitMQ pods' Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param podSecurityContext.enabled Enable RabbitMQ pods' Security Context
+## @param podSecurityContext.fsGroup Group ID for the filesystem used by the containers
+## @param podSecurityContext.runAsUser User ID for the service user running the pod
+##
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+  runAsUser: 1001
+
+## RabbitMQ containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 120
+  timeoutSeconds: 20
+  periodSeconds: 30
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  timeoutSeconds: 20
+  periodSeconds: 30
+  failureThreshold: 3
+  successThreshold: 1
+
+## RabbitMQ pods ServiceAccount
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  create: true
+  automountServiceAccountToken: true
+
+## Role Based Access
+## ref: https://kubernetes.io/docs/admin/authorization/rbac/
+rbac:
+  ## @param rbac.create Whether RBAC rules should be created
+  ## binding RabbitMQ ServiceAccount to a role
+  ## that allows RabbitMQ pods querying the K8s API
+  create: true
+
+persistence:
+  ## @param persistence.enabled Enable RabbitMQ data persistence using PVC
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
+## Kubernetes service type
+service:
+  type: ClusterIP
+  portEnabled: true
+  port: 5672
+  portName: amqp
+  tlsPort: 5671
+  tlsPortName: amqp-ssl
+  distPortEnabled: true
+  distPort: 25672
+  distPortName: dist
+  managerPortEnabled: true
+  managerPort: 15672
+  managerPortName: http-stats
+  metricsPort: 9419
+  metricsPortName: metrics
+  epmdPortEnabled: true
+  epmdPortName: epmd
+  externalTrafficPolicy: Cluster

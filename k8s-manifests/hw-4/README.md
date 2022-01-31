@@ -22,7 +22,6 @@ Prerequisites:
 
 How to run hw #4:
 ```console
-cd k8s-manifests/hw-4/
 # install istio
 istioctl install --set profile=demo -y
 # install prometheus

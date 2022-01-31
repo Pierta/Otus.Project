@@ -33,7 +33,7 @@ ingress:
           pathType: Prefix
         - path: /auth/login
           pathType: Prefix
-        - path: /auth/register
+        - path: /auth/register/billing
           pathType: Prefix
 
 externalPostgresql:

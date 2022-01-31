@@ -3,7 +3,7 @@ service:
   port: 8800
 
 image:
-  repository: pierta/otus.project.authapi
+  repository: pierta/otus.project.billingapi
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -26,14 +26,13 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-url: http://auth-api-auth-api-chart.otus-project.svc.cluster.local:8800/auth
   hosts:
     - host: arch.homework
       paths:
-        - path: /auth
+        - path: /billing
           pathType: Prefix
-        - path: /auth/login
-          pathType: Prefix
-        - path: /auth/register
+        - path: /billing/*
           pathType: Prefix
 
 externalPostgresql:

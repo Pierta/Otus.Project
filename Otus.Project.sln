@@ -137,7 +137,60 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.OrderApi", "Ot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.NotificationApi", "Otus.Project.NotificationApi\Otus.Project.NotificationApi.csproj", "{91BF443A-252B-4DF5-84C5-8D6ABEC84F72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.NotificationApi.Contracts", "Otus.Project.NotificationApi.Contracts\Otus.Project.NotificationApi.Contracts.csproj", "{1812485D-A28E-4552-A11F-FB3BA1542E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.NotificationApi.Contracts", "Otus.Project.NotificationApi.Contracts\Otus.Project.NotificationApi.Contracts.csproj", "{1812485D-A28E-4552-A11F-FB3BA1542E3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres-chart", "postgres-chart", "{DBB0770E-D20A-40EF-8546-ADD3BB49A860}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\postgres-chart\values.yaml = k8s-manifests\hw-6\postgres-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crud-api-chart", "crud-api-chart", "{08D23217-1D09-4717-B503-2B3852BB35F1}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\crud-api-chart\Chart.yaml = k8s-manifests\hw-6\crud-api-chart\Chart.yaml
+		k8s-manifests\hw-6\crud-api-chart\values.yaml = k8s-manifests\hw-6\crud-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-api-chart", "auth-api-chart", "{75776B13-AE32-4258-8C68-B07BA2313068}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\auth-api-chart\Chart.yaml = k8s-manifests\hw-6\auth-api-chart\Chart.yaml
+		k8s-manifests\hw-6\auth-api-chart\values.yaml = k8s-manifests\hw-6\auth-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{17199DC2-9BFD-4433-8A15-94788C73C513}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\auth-api-chart\templates\config.yaml = k8s-manifests\hw-6\auth-api-chart\templates\config.yaml
+		k8s-manifests\hw-6\auth-api-chart\templates\deployment.yaml = k8s-manifests\hw-6\auth-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-6\auth-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\auth-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-6\auth-api-chart\templates\service.yaml = k8s-manifests\hw-6\auth-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{35D3EB27-9E42-49A7-B805-5C328FE4728A}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\crud-api-chart\templates\config.yaml = k8s-manifests\hw-6\crud-api-chart\templates\config.yaml
+		k8s-manifests\hw-6\crud-api-chart\templates\deployment.yaml = k8s-manifests\hw-6\crud-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-6\crud-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\crud-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-6\crud-api-chart\templates\job.yaml = k8s-manifests\hw-6\crud-api-chart\templates\job.yaml
+		k8s-manifests\hw-6\crud-api-chart\templates\service.yaml = k8s-manifests\hw-6\crud-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "billing-api-chart", "billing-api-chart", "{E3EDAFAD-5E2B-484E-9A04-D0B85A1DEC8E}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\billing-api-chart\Chart.yaml = k8s-manifests\hw-6\billing-api-chart\Chart.yaml
+		k8s-manifests\hw-6\billing-api-chart\values.yaml = k8s-manifests\hw-6\billing-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{0C8E13F7-7368-4CDE-AA6A-A12FC0D1326C}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\billing-api-chart\templates\config.yaml = k8s-manifests\hw-6\billing-api-chart\templates\config.yaml
+		k8s-manifests\hw-6\billing-api-chart\templates\deployment.yaml = k8s-manifests\hw-6\billing-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-6\billing-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\billing-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-6\billing-api-chart\templates\service.yaml = k8s-manifests\hw-6\billing-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq-chart", "rabbitmq-chart", "{2CFC6458-FA88-4CA5-A609-650ABBFBD940}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\rabbitmq-chart\values.yaml = k8s-manifests\hw-6\rabbitmq-chart\values.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +266,14 @@ Global
 		{CF2475AA-6FDE-4D64-84F1-C4098E61B296} = {A6F1B505-8977-4499-B203-E77472EAF233}
 		{91BF443A-252B-4DF5-84C5-8D6ABEC84F72} = {A6F1B505-8977-4499-B203-E77472EAF233}
 		{1812485D-A28E-4552-A11F-FB3BA1542E3A} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{DBB0770E-D20A-40EF-8546-ADD3BB49A860} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{08D23217-1D09-4717-B503-2B3852BB35F1} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{75776B13-AE32-4258-8C68-B07BA2313068} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{17199DC2-9BFD-4433-8A15-94788C73C513} = {75776B13-AE32-4258-8C68-B07BA2313068}
+		{35D3EB27-9E42-49A7-B805-5C328FE4728A} = {08D23217-1D09-4717-B503-2B3852BB35F1}
+		{E3EDAFAD-5E2B-484E-9A04-D0B85A1DEC8E} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{0C8E13F7-7368-4CDE-AA6A-A12FC0D1326C} = {E3EDAFAD-5E2B-484E-9A04-D0B85A1DEC8E}
+		{2CFC6458-FA88-4CA5-A609-650ABBFBD940} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}
