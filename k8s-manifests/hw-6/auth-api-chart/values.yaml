@@ -42,3 +42,6 @@ externalPostgresql:
   postgresqlDatabase: otus-db
   postgresqlHost: "db-postgresql"
   postgresqlPort: "5432"
+
+billingApi:
+  url: "http://billing-api-billing-api-chart:8800"

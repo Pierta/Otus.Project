@@ -39,6 +39,11 @@ namespace Otus.Project.AuthApi.Services
         {
             var (newUser, errorMessage) = await RegisterInternal(model, ct);
 
+            if (newUser == null)
+            {
+                return (newUser, errorMessage); // just forward error to controller
+            }
+
             // Create billing account:
             // 3 retry attempts will be performed
             await _asyncClientServicePolicy.ExecuteAsync(async () =>

@@ -51,3 +51,8 @@ spec:
                 configMapKeyRef:
                   name: auth-api-config
                   key: Logging__LogLevel__Default
+            - name: BILLINGAPI_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-api-config
+                  key: BILLINGAPI_URI

@@ -4,6 +4,7 @@ metadata:
   name: auth-api-config
 data:
   Logging__LogLevel__Default: Warning
+  BILLINGAPI_URI: {{ .Values.billingApi.url }}
 ---
 apiVersion: v1
 kind: Secret

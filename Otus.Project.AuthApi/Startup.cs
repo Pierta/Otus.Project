@@ -92,7 +92,11 @@ namespace Otus.Project.AuthApi
             });
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.Configure<ExternalServices>(Configuration.GetSection("ExternalServices"));
+            services.Configure<ExternalServices>((o) => o.BillingApi = new BillingApi
+            {
+                Url = Environment.GetEnvironmentVariable("BILLINGAPI_URI")
+                    ?? Configuration["ExternalServices:BillingApi:Url"]
+            });
 
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
