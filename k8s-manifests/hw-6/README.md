@@ -22,7 +22,7 @@ Prerequisites:
 
 hw #6 schema:
 
-![schema](../../k8s-manifests/hw-6/schema.png)
+![schema](schema.png)
 
 How to run hw #6:
 ```console
@@ -39,11 +39,14 @@ helm install auth-api auth-api-chart/ --namespace otus-project --atomic
 # install billing api
 helm install billing-api billing-api-chart/ --namespace otus-project --atomic
 # install rabbitmq instance
-helm install rabbitmq bitnami/rabbitmq -f rabbitmq-chart/values.yaml --namespace otus-project --atomic
-
+helm install sbus bitnami/rabbitmq -f rabbitmq-chart/values.yaml --namespace otus-project --atomic
+# install notification api
+helm install notification-api notification-api-chart/ --namespace otus-project --atomic
+# install order api
+helm install order-api order-api-chart/ --namespace otus-project --atomic
 ```
 
-How to test hw #5:
+How to test hw #6:
 ```console
 newman run postman_collection.json
 

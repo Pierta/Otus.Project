@@ -192,6 +192,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq-chart", "rabbitmq-
 		k8s-manifests\hw-6\rabbitmq-chart\values.yaml = k8s-manifests\hw-6\rabbitmq-chart\values.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notification-api-chart", "notification-api-chart", "{DF5394F7-DF06-4620-BBC6-3EB5374E4B97}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\notification-api-chart\Chart.yaml = k8s-manifests\hw-6\notification-api-chart\Chart.yaml
+		k8s-manifests\hw-6\notification-api-chart\values.yaml = k8s-manifests\hw-6\notification-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{5841A84D-FCDA-4ED5-9299-7AE2A94D3B79}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\notification-api-chart\templates\config.yaml = k8s-manifests\hw-6\notification-api-chart\templates\config.yaml
+		k8s-manifests\hw-6\notification-api-chart\templates\deployment.yaml = k8s-manifests\hw-6\notification-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-6\notification-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\notification-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-6\notification-api-chart\templates\service.yaml = k8s-manifests\hw-6\notification-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "order-api-chart", "order-api-chart", "{416ECD86-83B0-4454-8320-56FA587217A6}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\order-api-chart\Chart.yaml = k8s-manifests\hw-6\order-api-chart\Chart.yaml
+		k8s-manifests\hw-6\order-api-chart\values.yaml = k8s-manifests\hw-6\order-api-chart\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{066720F4-A358-461E-AB91-2314BE8EDAC1}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\order-api-chart\templates\config.yaml = k8s-manifests\hw-6\order-api-chart\templates\config.yaml
+		k8s-manifests\hw-6\order-api-chart\templates\deployment.yaml = k8s-manifests\hw-6\order-api-chart\templates\deployment.yaml
+		k8s-manifests\hw-6\order-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\order-api-chart\templates\ingress.yaml
+		k8s-manifests\hw-6\order-api-chart\templates\service.yaml = k8s-manifests\hw-6\order-api-chart\templates\service.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -274,6 +302,10 @@ Global
 		{E3EDAFAD-5E2B-484E-9A04-D0B85A1DEC8E} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
 		{0C8E13F7-7368-4CDE-AA6A-A12FC0D1326C} = {E3EDAFAD-5E2B-484E-9A04-D0B85A1DEC8E}
 		{2CFC6458-FA88-4CA5-A609-650ABBFBD940} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{DF5394F7-DF06-4620-BBC6-3EB5374E4B97} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{5841A84D-FCDA-4ED5-9299-7AE2A94D3B79} = {DF5394F7-DF06-4620-BBC6-3EB5374E4B97}
+		{416ECD86-83B0-4454-8320-56FA587217A6} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
+		{066720F4-A358-461E-AB91-2314BE8EDAC1} = {416ECD86-83B0-4454-8320-56FA587217A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

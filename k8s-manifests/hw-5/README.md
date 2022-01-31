@@ -22,7 +22,7 @@ Prerequisites:
 
 hw #5 schema:
 
-![schema](../../k8s-manifests/hw-5/schema.png)
+![schema](schema.png)
 
 How to run hw #5:
 ```console

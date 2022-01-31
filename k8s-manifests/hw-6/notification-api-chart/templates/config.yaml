@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-api-config
+data:
+  Logging__LogLevel__Default: Warning
+  SERVICEBUS_CONNECTION: {{ .Values.serviceBus.connection }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: notification-api-secret
+type: Opaque
+data:
+  DATABASE_URI: {{ printf "Server=%s;Port=%s;Database=%s;User Id=%s;Pwd=%s;" .Values.externalPostgresql.postgresqlHost .Values.externalPostgresql.postgresqlPort .Values.externalPostgresql.postgresqlDatabase .Values.externalPostgresql.postgresqlUsername .Values.externalPostgresql.postgresqlPassword | b64enc | quote }}

@@ -108,7 +108,7 @@ namespace Otus.Project.NotificationApi
             services.AddScoped<INotificationService, NotificationService>();
 
             // service bus infrastructure configuration
-            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_URI")
+            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_CONNECTION")
                 ?? Configuration["ServiceBusSettings:Connection"];
 
             services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));

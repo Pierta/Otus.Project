@@ -110,7 +110,7 @@ namespace Otus.Project.OrderApi
             services.AddScoped<IBillingApiClient, BillingApiClient>();
 
             // service bus infrastructure configuration
-            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_URI")
+            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_CONNECTION")
                 ?? Configuration["ServiceBusSettings:Connection"];
 
             services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
