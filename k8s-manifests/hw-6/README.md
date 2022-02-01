@@ -22,6 +22,7 @@ Prerequisites:
 
 hw #6 schema:
 
+Http communication, but message broker only for notifications:
 ![schema](schema.png)
 
 How to run hw #6:

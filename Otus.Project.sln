@@ -130,7 +130,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.BillingApi", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-6", "hw-6", "{593CF09E-A9D5-479C-A0BF-10E14C9650C9}"
 	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-6\postman_collection.json = k8s-manifests\hw-6\postman_collection.json
 		k8s-manifests\hw-6\README.md = k8s-manifests\hw-6\README.md
+		k8s-manifests\hw-6\schema.plantuml = k8s-manifests\hw-6\schema.plantuml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.OrderApi", "Otus.Project.OrderApi\Otus.Project.OrderApi.csproj", "{CF2475AA-6FDE-4D64-84F1-C4098E61B296}"

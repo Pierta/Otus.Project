@@ -1,0 +1,43 @@
+﻿@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "User"
+participant "Nginx Api Gateway"
+participant "Auth Api"
+participant "Billing Api"
+participant "Order Api"
+participant "Notification Api"
+participant "RabbitMQ"
+participant "Postgres"
+
+"User" -> "Nginx Api Gateway" : Запрос POST /orders без JWT
+"Nginx Api Gateway" -> "Auth Api" : Проверка JWT
+
+alt #Pink JWT отсутствует
+
+"Auth Api" -> "User" : Не авторизован - 401
+
+else #LightBlue регистрация нового пользователя и создание заказа
+
+"User" -> "Auth Api" : Запрос POST /auth/register/billing
+"Auth Api" -> "Billing Api" : Запрос POST /billing
+"Billing Api" -> "Auth Api" : Новый биллинг аккаунт создан
+"Auth Api" -> "User" : Новый пользователь создан
+
+"User" -> "Auth Api" : Запрос POST /auth/login
+"Auth Api" -> "User" : Новый JWT
+
+"User" -> "Nginx Api Gateway" : Запрос POST /orders с JWT
+"Nginx Api Gateway" -> "Auth Api" : Проверка JWT
+"Auth Api" -> "Nginx Api Gateway" : Авторизован - 200
+"Nginx Api Gateway" -> "Order Api" : Запрос POST /orders с JWT
+"Order Api" -> "Billing Api" : Снятие денег со счёта
+"Billing Api" -> "Postgres" : Пессимистичная блокировка
+"Postgres" -> "Billing Api" : Пессимистичная блокировка
+"Billing Api" -> "Order Api" : Денег хватило
+"Order Api" -> "RabbitMQ" : Отправка сообщения в очередь
+"RabbitMQ" -> "Notification Api" : Обработка сообщения из очереди
+"Notification Api" -> "User" : Отправка письма "счастья"
+
+end
+@enduml

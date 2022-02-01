@@ -84,7 +84,7 @@ namespace Otus.Project.OrderApi.Controllers
             return Ok(userOrders);
         }
 
-        [HttpGet("/Products")]
+        [HttpGet("Products")]
         public async Task<IActionResult> GetProducts(CancellationToken ct)
         {
             _logger.LogInformation("'Get a list of products' action has been requested");

@@ -1,0 +1,645 @@
+{
+	"info": {
+		"_postman_id": "5527cd02-b7b3-4647-9723-6d1b7dc80b8c",
+		"name": "Otus.Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hw-6 test (create an order)",
+			"item": [
+				{
+					"name": "Generate random variables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"email\", jsonObj.data.email)\r",
+									"pm.collectionVariables.set(\"password\", jsonObj.data.password)\r",
+									"\r",
+									"console.log('Response:', jsonObj.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{$guid}}@{{$randomColor}}.com\",\r\n    \"password\": \"{{$guid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register a new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"user_id\", jsonObj.id)\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', jsonObj.id)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"firstName\": \"some\",\r\n    \"lastName\": \"new\",\r\n    \"middleName\": \"user\",\r\n    \"cellPhone\": \"222-222-3333\",\r\n    \"isEmailNotificationEnabled\": true    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as the new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"token\", jsonObj.token)\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', jsonObj.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '0'\", function () {\r",
+									"  pm.expect(pm.response.json()).equals(0);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top up your balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '100'\", function () {\r",
+									"  pm.expect(pm.response.text()).contains(\"100\");\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing/topUp/100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing",
+								"topUp",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new order (money is enough)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that the order is paid\", function () {\r",
+									"  var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.isPaid).equals(true);\r",
+									"});\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    \"0796f40a-9e24-46ea-a7a5-ea445d2d4ac1\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '45'\", function () {\r",
+									"  pm.expect(pm.response.json()).equals(45);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 sec delay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/delay/5",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"delay",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user notifications (\"Happy letter\")",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that we have 'Happy letter'\", function () {\r",
+									"  var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData[0].orderIsPaid).equals(true);\r",
+									"  pm.expect(jsonData[0].message).contains(\"Happy letter!\");\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notifications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new order (money is  NOT enough)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that the order is unpaid\", function () {\r",
+									"  var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.isPaid).equals(false);\r",
+									"});\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    \"0796f40a-9e24-46ea-a7a5-ea445d2d4ac1\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it still returns '45'\", function () {\r",
+									"  pm.expect(pm.response.json()).equals(45);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 sec delay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/delay/5",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"delay",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user notifications (\"Sad letter\")",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that we have 'Sad letter'\", function () {\r",
+									"  var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData[0].orderIsPaid).equals(false);\r",
+									"  pm.expect(jsonData[0].message).contains(\"Sad letter!\");\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notifications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://arch.homework"
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": "some@example.com"
+		},
+		{
+			"key": "password",
+			"value": "123"
+		},
+		{
+			"key": "new_firstName",
+			"value": "another"
+		},
+		{
+			"key": "email2",
+			"value": "some2@example.com"
+		},
+		{
+			"key": "password2",
+			"value": "321"
+		}
+	]
+}
