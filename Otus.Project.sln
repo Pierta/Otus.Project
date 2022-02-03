@@ -224,7 +224,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-7", "hw-7", "{766ECCCD-6BCE-478E-B924-6FB5A6799B76}"
 	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-7\postman_collection.json = k8s-manifests\hw-7\postman_collection.json
 		k8s-manifests\hw-7\README.md = k8s-manifests\hw-7\README.md
+		k8s-manifests\hw-7\schema.plantuml = k8s-manifests\hw-7\schema.plantuml
 	EndProjectSection
 EndProject
 Global

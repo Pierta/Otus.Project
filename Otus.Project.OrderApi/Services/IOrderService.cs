@@ -10,6 +10,8 @@ namespace Otus.Project.OrderApi.Services
     {
         Task<OrderVm> CreateOrder(Guid userId, OrderModel orderModel, CancellationToken ct);
 
+        Task<OrderVm> CreateOrderIdempotent(Guid userId, OrderModel orderModel, CancellationToken ct);
+
         Task<OrderVm> GetOrderById(Guid orderId, CancellationToken ct);
 
         Task<List<OrderVm>> GetUserOrders(Guid userId, CancellationToken ct);

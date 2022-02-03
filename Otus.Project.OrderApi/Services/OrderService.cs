@@ -1,7 +1,10 @@
 ﻿using EasyNetQ;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using Otus.Project.Domain.Model;
 using Otus.Project.NotificationApi.Contracts;
+using Otus.Project.OrderApi.Constants;
 using Otus.Project.OrderApi.Model;
 using Otus.Project.Orm.Repository;
 using System;
@@ -22,21 +25,24 @@ namespace Otus.Project.OrderApi.Services
         private readonly IRepository<User, Guid> _userRepository;
         private readonly IBus _bus;
         private readonly IBillingApiClient _billingApiClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(IRepository<Order, Guid> orderRepository,
             IRepository<Product, Guid> productRepository,
             IRepository<User, Guid> userRepository,
             IBus bus,
-            IBillingApiClient billingApiClient)
+            IBillingApiClient billingApiClient,
+            IHttpContextAccessor httpContextAccessor)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
             _userRepository = userRepository;
             _bus = bus;
             _billingApiClient = billingApiClient;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<OrderVm> CreateOrder(Guid userId, OrderModel orderModel, CancellationToken ct)
+        public async Task<OrderVm> CreateOrder(Guid userId, OrderModel orderModel, CancellationToken ct = default)
         {
             Expression<Func<Product, bool>> selectByProductIdsSpec = product => orderModel.Products.Contains(product.Id);
             var products = await _productRepository.FindAllByExpression(selectByProductIdsSpec, ct);
@@ -61,6 +67,10 @@ namespace Otus.Project.OrderApi.Services
                     ProductId = productId
                 }).ToList()
             };
+            if (orderModel.IdempotencyKey.HasValue)
+            {
+                newOrder.Id = orderModel.IdempotencyKey.Value;
+            }
             _orderRepository.Add(newOrder);
             await _orderRepository.CommitChangesAsync(ct);
 
@@ -88,6 +98,39 @@ namespace Otus.Project.OrderApi.Services
             }
 
             return newOrder.ConvertToVm();
+        }
+
+        public async Task<OrderVm> CreateOrderIdempotent(Guid userId, OrderModel orderModel, CancellationToken ct)
+        {
+            var idempotencyKeyHeader = _httpContextAccessor.HttpContext.Request.Headers
+                .TryGetValue(ApiConstants.IdempotencyKeyHeader, out StringValues requestHeader)
+                    ? requestHeader[0]
+                    : null;
+
+            if (string.IsNullOrEmpty(idempotencyKeyHeader) || !Guid.TryParse(idempotencyKeyHeader, out Guid idempotencyKey))
+            {
+                throw new ArgumentException("Idempotency Key is not provided in the request headers");
+            }
+
+            Expression<Func<Order, bool>> selectByOrderIdSpec = order => order.Id == idempotencyKey;
+            var existingOrder = await _orderRepository.FindAll()
+                .Where(selectByOrderIdSpec)
+                .Include(o => o.Products)
+                    .ThenInclude(op => op.Product)
+                .SingleOrDefaultAsync(ct);           
+            if (existingOrder == null)
+            {
+                orderModel.IdempotencyKey = idempotencyKey;
+                return await CreateOrder(userId, orderModel, ct);
+            }
+
+            if (!existingOrder.Products.Select(op => op.ProductId)
+                .SequenceEqual(orderModel.Products))
+            {
+                throw new ArgumentException("Idempotency key is duplicated");
+            }
+
+            return existingOrder.ConvertToVm();
         }
 
         public async Task<OrderVm> GetOrderById(Guid orderId, CancellationToken ct)

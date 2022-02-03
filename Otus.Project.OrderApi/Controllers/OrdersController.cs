@@ -52,6 +52,32 @@ namespace Otus.Project.OrderApi.Controllers
             }
         }
 
+        [HttpPost("Idempotent")]
+        public async Task<IActionResult> PostIdempotent([FromBody] OrderModel orderModel, CancellationToken ct)
+        {
+            _logger.LogInformation("'Create new order (idempotent)' action has been requested");
+
+            if (orderModel == null || orderModel.Products == null || !orderModel.Products.Any())
+            {
+                return BadRequest("Some product(s) must be specified to make an order");
+            }
+
+            var userIdFromToken = (Guid?)_httpContextAccessor.HttpContext.Items["UserId"];
+            try
+            {
+                var newOrder = await _orderService.CreateOrderIdempotent(userIdFromToken.Value, orderModel, ct);
+                return Ok(newOrder);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("{orderId:Guid}")]
         public async Task<IActionResult> Get([FromRoute] Guid orderId, CancellationToken ct)
         {

@@ -10,27 +10,16 @@ participant "Notification Api"
 participant "RabbitMQ"
 participant "Postgres"
 
-"User" -> "Nginx Api Gateway" : Запрос POST /orders без JWT
-"Nginx Api Gateway" -> "Auth Api" : Проверка JWT
-
-alt #Pink JWT отсутствует
-
-"Auth Api" -> "User" : Не авторизован - 401
-
-else #LightBlue регистрация нового пользователя и создание заказа
-
-"User" -> "Auth Api" : Запрос POST /auth/register/billing
-"Auth Api" -> "Billing Api" : Запрос POST /billing
-"Billing Api" -> "Auth Api" : Новый биллинг аккаунт создан
-"Auth Api" -> "User" : Новый пользователь создан
-
 "User" -> "Auth Api" : Запрос POST /auth/login
 "Auth Api" -> "User" : Новый JWT
 
-"User" -> "Nginx Api Gateway" : Запрос POST /orders с JWT
+"User" -> "Nginx Api Gateway" : Запрос POST /orders/idempotent\nHeaders: Idempotency-Key={GUID}
 "Nginx Api Gateway" -> "Auth Api" : Проверка JWT
 "Auth Api" -> "Nginx Api Gateway" : Авторизован - 200
-"Nginx Api Gateway" -> "Order Api" : Запрос POST /orders с JWT
+"Nginx Api Gateway" -> "Order Api" : Запрос POST /orders/idempotent\nHeaders: Idempotency-Key={GUID}
+
+alt #LightBlue Такого Idempotency-Key ещё нет
+
 "Order Api" -> "Billing Api" : Снятие денег со счёта
 "Billing Api" -> "Postgres" : Пессимистичная блокировка
 "Postgres" -> "Billing Api" : Пессимистичная блокировка
@@ -41,5 +30,14 @@ else #LightBlue регистрация нового пользователя и 
 "RabbitMQ" -> "Notification Api" : Обработка сообщения из очереди
 "Notification Api" -> "User" : Отправка письма "счастья"
 
+else #Pink Такой Idempotency-Key уже представлен и параметры заказа те же
+
+"Order Api" -> "User" : Информация о существующем заказе
+
+else #Red Такой Idempotency-Key уже представлен и параметры заказа изменены
+
+"Order Api" -> "User" : 400 - дубликат Idempotency-Key
+
 end
+
 @enduml

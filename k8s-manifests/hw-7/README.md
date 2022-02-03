@@ -18,8 +18,9 @@ Prerequisites:
 
 hw #7 schema:
 
-Used hw-6 schema (http communication, but message broker only for notifications):
-![schema](../hw-6/schema.png)
+Used the same schema, as in hw-6 (http communication, but message broker only for notifications).
+Provided Idempotency key as a header in http request (it's used as an order id):
+![schema](schema.png)
 
 How to run hw #7:
 ```console
