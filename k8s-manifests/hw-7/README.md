@@ -1,5 +1,5 @@
 # Otus.Project
-📚 Homework #5
+📚 Homework #7
 
 ---
 
@@ -16,26 +16,38 @@ Prerequisites:
 
 ---
 
-hw #5 schema:
+hw #7 schema:
 
-![schema](schema.png)
+Used hw-6 schema (http communication, but message broker only for notifications):
+![schema](../hw-6/schema.png)
 
-How to run hw #5:
+How to run hw #7:
 ```console
 # https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
 # if you don't have ingress-nginx installed, uncomment the line below and run in a console
 #kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.5/deploy/static/provider/cloud/deploy.yaml
 
+# use helm charts from hw-6
+cd ../hw-6
 # install postgres instance
 helm install db bitnami/postgresql -f postgres-chart/values.yaml --namespace otus-project --create-namespace --atomic
 # install an application with crud api for managing users
 helm install crud-api crud-api-chart/ --namespace otus-project --atomic
 # install auth api
 helm install auth-api auth-api-chart/ --namespace otus-project --atomic
+# install billing api
+helm install billing-api billing-api-chart/ --namespace otus-project --atomic
+# install rabbitmq instance
+helm install sbus bitnami/rabbitmq -f rabbitmq-chart/values.yaml --namespace otus-project --atomic
+# install notification api
+helm install notification-api notification-api-chart/ --namespace otus-project --atomic
+# install order api
+helm install order-api order-api-chart/ --namespace otus-project --atomic
 ```
 
-How to test hw #5:
+How to test hw #7:
 ```console
+cd ../hw-7
 newman run postman_collection.json
 
 # remove all the resources

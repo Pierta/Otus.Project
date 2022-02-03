@@ -222,6 +222,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		k8s-manifests\hw-6\order-api-chart\templates\service.yaml = k8s-manifests\hw-6\order-api-chart\templates\service.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-7", "hw-7", "{766ECCCD-6BCE-478E-B924-6FB5A6799B76}"
+	ProjectSection(SolutionItems) = preProject
+		k8s-manifests\hw-7\README.md = k8s-manifests\hw-7\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -308,6 +313,7 @@ Global
 		{5841A84D-FCDA-4ED5-9299-7AE2A94D3B79} = {DF5394F7-DF06-4620-BBC6-3EB5374E4B97}
 		{416ECD86-83B0-4454-8320-56FA587217A6} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
 		{066720F4-A358-461E-AB91-2314BE8EDAC1} = {416ECD86-83B0-4454-8320-56FA587217A6}
+		{766ECCCD-6BCE-478E-B924-6FB5A6799B76} = {C551978A-7083-4248-933C-CA5B1DD27C8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}
