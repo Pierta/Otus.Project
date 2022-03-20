@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /Otus.Project.CrudApi/appsettings.local.json
 /k8s-manifests/hw-8
+*.pptx

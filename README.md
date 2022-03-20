@@ -10,3 +10,5 @@
 5. [homework #5](./k8s-manifests/hw-5/README.md)
 6. [homework #6](./k8s-manifests/hw-6/README.md)
 7. [homework #7](./k8s-manifests/hw-7/README.md)
+8. No files
+9. [homework #9](./k8s-manifests/hw-9/README.md)

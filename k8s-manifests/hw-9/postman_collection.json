@@ -1,0 +1,789 @@
+{
+	"info": {
+		"_postman_id": "84038bdc-1d3c-43e3-b8b2-2bc662f875bd",
+		"name": "Otus.Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hw-9 test (saga)",
+			"item": [
+				{
+					"name": "Generate random variables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"email\", jsonObj.data.email)\r",
+									"pm.collectionVariables.set(\"password\", jsonObj.data.password)\r",
+									"pm.collectionVariables.set(\"idempotencyKey\", jsonObj.data.idempotencyKey)\r",
+									"\r",
+									"console.log('Response:', jsonObj.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{$guid}}@{{$randomColor}}.com\",\r\n    \"password\": \"{{$guid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register a new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"user_id\", jsonObj.id)\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', jsonObj.id)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"firstName\": \"some\",\r\n    \"lastName\": \"new\",\r\n    \"middleName\": \"user\",\r\n    \"cellPhone\": \"222-222-3333\",\r\n    \"isEmailNotificationEnabled\": true    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as the new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"var jsonObj = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"token\", jsonObj.token)\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', jsonObj.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top up your balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '100'\", function () {\r",
+									"  pm.expect(pm.response.text()).contains(\"100\");\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing/topUp/100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing",
+								"topUp",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stocks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stocks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new order (not enough money)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that the order is in 'pending' state\", function () {\r",
+									"  var jsonData = pm.response.json()\r",
+									"  pm.collectionVariables.set(\"order_id\", jsonData.id)\r",
+									"  pm.expect(jsonData.orderState).equals(2)\r",
+									"});\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{idempotencyKey}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    \"0796f40a-9e24-46ea-a7a5-ea445d2d4ac3\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/saga/orders/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"saga",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10 sec delay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/delay/10",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"delay",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stock for the product #3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '90'\", function () {\r",
+									"  pm.expect(pm.response.json().amount).equals(90);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stocks/0796f40a-9e24-46ea-a7a5-ea445d2d4ac3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stocks",
+								"0796f40a-9e24-46ea-a7a5-ea445d2d4ac3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get delivery slot for the order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is failed with a status code of 404\", function () {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deliveryslots/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deliveryslots",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '100'\", function () {\r",
+									"  pm.expect(pm.response.json()).equals(100);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new order (money is enough)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that the order is in 'pending' state\", function () {\r",
+									"  var jsonData = pm.response.json()\r",
+									"  pm.collectionVariables.set(\"order_id\", jsonData.id)\r",
+									"  pm.expect(jsonData.orderState).equals(2)\r",
+									"});\r",
+									"\r",
+									"console.log('Request:', pm.request.body.raw)\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{idempotencyKey}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    \"0796f40a-9e24-46ea-a7a5-ea445d2d4ac1\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/saga/orders/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"saga",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10 sec delay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/delay/10",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"delay",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stock for the product #1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '49'\", function () {\r",
+									"  pm.expect(pm.response.json().amount).equals(49);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stocks/0796f40a-9e24-46ea-a7a5-ea445d2d4ac1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stocks",
+								"0796f40a-9e24-46ea-a7a5-ea445d2d4ac1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get delivery slot for the order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deliveryslots/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deliveryslots",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that it returns '45'\", function () {\r",
+									"  pm.expect(pm.response.json()).equals(45);\r",
+									"});\r",
+									"\r",
+									"console.log('Response:', responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/billing",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://arch.homework"
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": "some@example.com"
+		},
+		{
+			"key": "password",
+			"value": "123"
+		},
+		{
+			"key": "new_firstName",
+			"value": "another"
+		},
+		{
+			"key": "email2",
+			"value": "some2@example.com"
+		},
+		{
+			"key": "password2",
+			"value": "321"
+		},
+		{
+			"key": "idempotencyKey",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "order_id",
+			"value": "7102e6c3-2024-438f-8025-7804c9780c0e",
+			"type": "default"
+		}
+	]
+}

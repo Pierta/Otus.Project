@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Otus.Project.Domain.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Otus.Project.OrderApi.Model
@@ -18,5 +19,7 @@ namespace Otus.Project.OrderApi.Model
         public bool IsPaid { get; set; }
 
         public List<ProductVm> Products { get; set; }
+
+        public OrderState OrderState { get; set; }
     }
 }

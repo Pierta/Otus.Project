@@ -34,6 +34,8 @@ ingress:
           pathType: Prefix
         - path: /orders/*
           pathType: Prefix
+        - path: /saga/orders
+          pathType: Prefix
 
 externalPostgresql:
   postgresqlUsername: otus-user

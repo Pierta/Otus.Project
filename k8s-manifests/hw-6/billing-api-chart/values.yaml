@@ -41,3 +41,6 @@ externalPostgresql:
   postgresqlDatabase: otus-db
   postgresqlHost: "db-postgresql"
   postgresqlPort: "5432"
+
+serviceBus:
+  connection: "host=sbus-rabbitmq;username=rabbitmq;password=rabbitmq"

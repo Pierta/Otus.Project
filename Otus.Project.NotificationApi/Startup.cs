@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.MessageBus.Contracts;
 using Otus.Project.NotificationApi.Extensions;
 using Otus.Project.NotificationApi.Services;
 using Otus.Project.NotificationApi.Settings;

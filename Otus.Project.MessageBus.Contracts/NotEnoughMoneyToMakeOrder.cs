@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Otus.Project.NotificationApi.Contracts
+namespace Otus.Project.MessageBus.Contracts
 {
-    public class OrderCreated
-    {        
+    public class NotEnoughMoneyToMakeOrder
+    {
         public Guid UserId { get; set; }
 
         public Guid OrderId { get; set; }

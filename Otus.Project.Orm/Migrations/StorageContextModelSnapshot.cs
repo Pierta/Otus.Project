@@ -71,6 +71,72 @@ namespace Otus.Project.Orm.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Otus.Project.Domain.Model.DeliverySlot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Courier")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("DeliverySlots");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb1"),
+                            Courier = "Boris Razor",
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            From = new DateTime(2022, 1, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsCompleted = false,
+                            To = new DateTime(2022, 1, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb2"),
+                            Courier = "Ivan Grozny",
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            From = new DateTime(2022, 1, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsCompleted = false,
+                            To = new DateTime(2022, 1, 1, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb3"),
+                            Courier = "John Wick",
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            From = new DateTime(2022, 1, 1, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsCompleted = false,
+                            To = new DateTime(2022, 1, 1, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
             modelBuilder.Entity("Otus.Project.Domain.Model.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -121,6 +187,9 @@ namespace Otus.Project.Orm.Migrations
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("OrderState")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -207,6 +276,57 @@ namespace Otus.Project.Orm.Migrations
                             Cost = 135m,
                             CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "Product #3",
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("Otus.Project.Domain.Model.Stock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Stocks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb1"),
+                            Amount = 50,
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ProductId = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ac1"),
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb2"),
+                            Amount = 75,
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ProductId = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ac2"),
+                            UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2dbbb3"),
+                            Amount = 90,
+                            CreatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ProductId = new Guid("0796f40a-9e24-46ea-a7a5-ea445d2d4ac3"),
                             UpdatedDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
@@ -301,6 +421,15 @@ namespace Otus.Project.Orm.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Otus.Project.Domain.Model.DeliverySlot", b =>
+                {
+                    b.HasOne("Otus.Project.Domain.Model.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Otus.Project.Domain.Model.Notification", b =>
                 {
                     b.HasOne("Otus.Project.Domain.Model.Order", "Order")
@@ -346,6 +475,17 @@ namespace Otus.Project.Orm.Migrations
                         .IsRequired();
 
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Otus.Project.Domain.Model.Stock", b =>
+                {
+                    b.HasOne("Otus.Project.Domain.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });

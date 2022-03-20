@@ -14,7 +14,17 @@ namespace Otus.Project.Domain.Model
 
         public bool IsPaid { get; set; }
 
+        public OrderState OrderState { get; set; }
+
         [InverseProperty(nameof(OrderProducts.Order))]
         public virtual List<OrderProducts> Products { get; set; }
+    }
+
+    public enum OrderState
+    {
+        Draft = 1,
+        Pending = 2,
+        Completed = 3,
+        Rejected = 4
     }
 }

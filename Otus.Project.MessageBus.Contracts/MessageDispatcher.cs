@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Otus.Project.NotificationApi.Services
+namespace Otus.Project.MessageBus.Contracts
 {
     public class MessageDispatcher : IAutoSubscriberMessageDispatcher
     {

@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Otus.Project.Domain.Model;
 
 namespace Otus.Project.Orm.Configuration
 {
     public class StorageContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-
         public StorageContext()
         {
         }
@@ -24,6 +21,8 @@ namespace Otus.Project.Orm.Configuration
             modelBuilder.ApplyConfiguration(new OrderMap());
             modelBuilder.ApplyConfiguration(new OrderProductsMap());
             modelBuilder.ApplyConfiguration(new NotificationMap());
+            modelBuilder.ApplyConfiguration(new StockMap());
+            modelBuilder.ApplyConfiguration(new DeliverySlotMap());
 
             base.OnModelCreating(modelBuilder);
         }

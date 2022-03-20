@@ -1,0 +1,43 @@
+﻿@startuml
+'https://plantuml.com/sequence-diagram
+
+actor "User"
+participant "Nginx Api Gateway"
+participant "Auth Api"
+participant "Order Api"
+participant "Stock Api"
+participant "Delivery Api"
+participant "Billing Api"
+participant "RabbitMQ"
+
+"User" -> "Auth Api" : Запрос POST /auth/login
+"Auth Api" -> "User" : Новый JWT
+
+"User" -> "Nginx Api Gateway" : Запрос POST /saga/orders
+"Nginx Api Gateway" -> "Auth Api" : Проверка JWT
+"Auth Api" -> "Nginx Api Gateway" : Авторизован - 200
+"Nginx Api Gateway" -> "Order Api" : Запрос POST /saga/orders
+
+"Order Api" -> "RabbitMQ" : OrderCreated\n(state=Pending)
+"RabbitMQ" -> "Stock Api" : OrderCreated\n(резервирование товара)
+"Stock Api" -> "RabbitMQ" : StockReserved
+"RabbitMQ" -> "Delivery Api" : StockReserved\n(резервирование курьера)
+"Delivery Api" -> "RabbitMQ" : DeliveryReserved
+"RabbitMQ" -> "Billing Api" : DeliveryReserved\n(платёж)
+"Billing Api" -> "RabbitMQ" : PaymentCompleted\n(денег хватило)
+"RabbitMQ" -> "Order Api" : PaymentCompleted\n(state=Completed)
+
+alt #LightBlue Денег НЕ хватило (откат)
+
+"Billing Api" -> "RabbitMQ" : PaymentRejected\n(денег НЕ хватило)
+"RabbitMQ" -> "Delivery Api" : PaymentRejected\n(отмена резервирования курьера)
+"Delivery Api" -> "RabbitMQ" : DeliveryReleased
+"RabbitMQ" -> "Stock Api" : DeliveryReleased\n(отмена резервирования товара)
+"Stock Api" -> "RabbitMQ" : StockReleased
+"RabbitMQ" -> "Order Api" : StockReleased\n(state=Rejected)
+
+end
+
+"Order Api" -> "User" : Информация о созданном заказе
+
+@enduml

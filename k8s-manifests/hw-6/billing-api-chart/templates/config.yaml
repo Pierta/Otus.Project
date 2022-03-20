@@ -4,6 +4,7 @@ metadata:
   name: billing-api-config
 data:
   Logging__LogLevel__Default: Warning
+  SERVICEBUS_CONNECTION: {{ .Values.serviceBus.connection }}
 ---
 apiVersion: v1
 kind: Secret

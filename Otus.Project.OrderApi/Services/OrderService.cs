@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using Otus.Project.Domain.Model;
-using Otus.Project.NotificationApi.Contracts;
+using Otus.Project.MessageBus.Contracts;
 using Otus.Project.OrderApi.Constants;
 using Otus.Project.OrderApi.Model;
 using Otus.Project.Orm.Repository;

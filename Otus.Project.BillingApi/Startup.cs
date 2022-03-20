@@ -1,3 +1,6 @@
+using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
+using EasyNetQ.Logging;
 using Medallion.Threading;
 using Medallion.Threading.Postgres;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,11 +17,13 @@ using Microsoft.OpenApi.Models;
 using Otus.Project.BillingApi.Extensions;
 using Otus.Project.BillingApi.Services;
 using Otus.Project.BillingApi.Settings;
+using Otus.Project.MessageBus.Contracts;
 using Otus.Project.Orm.Configuration;
 using Otus.Project.Orm.Repository;
 using Prometheus;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Otus.Project.BillingApi
@@ -27,6 +32,8 @@ namespace Otus.Project.BillingApi
     {
         private const string Readiness = "Readiness";
         private const string HealthCheckSql = "SELECT 1 FROM User;";
+
+        private const string SubscriptionIdPrefix = "BillingService";
 
         public Startup(IConfiguration configuration)
         {
@@ -103,6 +110,26 @@ namespace Otus.Project.BillingApi
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped<IBillingAccountService, BillingAccountService>();
+
+            // service bus infrastructure configuration
+            string serviceBusConnection = Environment.GetEnvironmentVariable("SERVICEBUS_CONNECTION")
+                ?? Configuration["ServiceBusSettings:Connection"];
+
+            services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
+            services.AddSingleton<MessageDispatcher>();
+            services.AddSingleton(provider =>
+            {
+                return new AutoSubscriber(provider.GetRequiredService<IBus>(), SubscriptionIdPrefix)
+                {
+                    AutoSubscriberMessageDispatcher = provider.GetRequiredService<MessageDispatcher>()
+                };
+            });
+
+            // message handlers registration
+            services.AddScoped<DeliveryReservedConsumer>();
+
+            // configure console logging for EasyNetQ
+            LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,6 +164,8 @@ namespace Otus.Project.BillingApi
                     Predicate = check => check.Tags.Contains(Readiness)
                 });
             });
+
+            app.ApplicationServices.GetRequiredService<AutoSubscriber>().SubscribeAsync(new[] { Assembly.GetExecutingAssembly() });
         }
     }
 }

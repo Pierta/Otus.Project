@@ -7,9 +7,9 @@ namespace Otus.Project.Orm.Configuration
 {
     public class ProductMap : IEntityTypeConfiguration<Product>
     {
-        private readonly Guid Product1Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac1");
-        private readonly Guid Product2Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac2");
-        private readonly Guid Product3Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac3");
+        public static Guid Product1Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac1");
+        public static Guid Product2Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac2");
+        public static Guid Product3Id = new("0796f40a-9e24-46ea-a7a5-ea445d2d4ac3");
 
         public void Configure(EntityTypeBuilder<Product> builder)
         {

@@ -21,7 +21,8 @@ namespace Otus.Project.OrderApi.Model
                         Id = op.ProductId,
                         Name = op.Product.Name,
                         Cost = op.Product.Cost
-                    }).ToList()
+                    }).ToList(),
+                OrderState = order.OrderState
             };
         }
 

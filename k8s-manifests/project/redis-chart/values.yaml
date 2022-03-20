@@ -1,0 +1,229 @@
+image:
+  registry: docker.io
+  repository: bitnami/redis
+  tag: 6.2.6-debian-10-r146
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+
+## @param architecture Redis&trade; architecture. Allowed values: `standalone` or `replication`
+##
+architecture: replication
+
+auth:
+  enabled: true
+  sentinel: true
+  password: "redis-pass"
+  usePasswordFiles: false
+
+master:
+  disableCommands:
+    - FLUSHDB
+    - FLUSHALL
+  
+  containerPorts:
+    redis: 6379
+
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 5
+
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+
+  ## @param master.kind Use either Deployment or StatefulSet (default)
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+  ##
+  kind: StatefulSet
+
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate: {}
+
+  ## @param master.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `master.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+
+  persistence:
+    enabled: true
+    path: /data
+    subPath: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+
+  ## Redis&trade; master service parameters
+  ##
+  service:
+    type: ClusterIP
+    ports:
+      redis: 6379
+    nodePorts:
+      redis: ""
+    externalTrafficPolicy: Cluster
+
+  terminationGracePeriodSeconds: 30
+
+## @section Redis&trade; replicas configuration parameters
+##
+
+replica:
+  replicaCount: 1
+  disableCommands:
+    - FLUSHDB
+    - FLUSHALL
+  externalMaster:
+    enabled: false
+    host: ""
+    port: 6379
+  containerPorts:
+    redis: 6379
+
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 5
+
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate: {}
+  
+  shareProcessNamespace: false
+  ## @param replica.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `replica.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+
+  persistence:
+    enabled: true
+    path: /data
+    subPath: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+
+  ## Redis&trade; replicas service parameters
+  ##
+  service:
+    type: ClusterIP
+    ports:
+      redis: 6379
+    nodePorts:
+      redis: ""
+    externalTrafficPolicy: Cluster
+
+  terminationGracePeriodSeconds: 30
+
+## @section Other Parameters
+##
+
+## Network Policy configuration
+## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+##
+networkPolicy:
+  enabled: false
+  allowExternal: true
+
+## ServiceAccount configuration
+##
+serviceAccount:
+  create: true
+  automountServiceAccountToken: true
+
+## @section Metrics Parameters
+##
+metrics:
+  enabled: false
+
+  image:
+    registry: docker.io
+    repository: bitnami/redis-exporter
+    tag: 1.35.1-debian-10-r16
+    pullPolicy: IfNotPresent
+
+  redisTargetHost: "localhost"
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+
+  resources:
+    limits: {}
+    requests: {}
+
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9121"
+  ## Redis&trade; exporter service parameters
+  ##
+  service:
+    type: ClusterIP
+    port: 9121
+    externalTrafficPolicy: Cluster
+
+  ## Prometheus Service Monitor
+  ## ref: https://github.com/coreos/prometheus-operator
+  ##      https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+  ##
+  serviceMonitor:
+    enabled: false
+    namespace: ""
+    interval: 30s
+    scrapeTimeout: ""
+    relabellings: []
+    metricRelabelings: []
+    honorLabels: false
+    additionalLabels: {}

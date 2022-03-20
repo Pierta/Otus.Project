@@ -1,6 +1,8 @@
-﻿using Medallion.Threading;
+﻿using EasyNetQ;
+using Medallion.Threading;
 using Otus.Project.BillingApi.Model;
 using Otus.Project.Domain.Model;
+using Otus.Project.MessageBus.Contracts;
 using Otus.Project.Orm.Repository;
 using System;
 using System.Collections.Generic;
@@ -14,12 +16,15 @@ namespace Otus.Project.BillingApi.Services
     {
         private readonly IRepository<BillingAccount, Guid> _billingAccountRepository;
         private readonly IDistributedLockProvider _distributedLockProvider;
+        private readonly IBus _bus;
 
         public BillingAccountService(IRepository<BillingAccount, Guid> billingAccountRepository,
-            IDistributedLockProvider distributedLockProvider)
+            IDistributedLockProvider distributedLockProvider,
+            IBus bus)
         {
             _billingAccountRepository = billingAccountRepository;
             _distributedLockProvider = distributedLockProvider;
+            _bus = bus;
         }
 
         public async Task<BillingAccountVm> CreateNewBillingAccountIfNotExist(Guid userId, CancellationToken ct)
@@ -97,6 +102,29 @@ namespace Otus.Project.BillingApi.Services
                 await _billingAccountRepository.CommitChangesAsync(ct);
 
                 return existingBillingAccount.Balance;
+            }
+        }
+
+        public async Task PayForTheOrder(DeliveryReserved deliveryModel, CancellationToken ct)
+        {
+            try
+            {
+                await WithdrawMoney(deliveryModel.UserId, deliveryModel.Cost, ct);
+                await _bus.PubSub.PublishAsync(new PaymentCompleted
+                {
+                    UserId = deliveryModel.UserId,
+                    OrderId = deliveryModel.OrderId,
+                    Cost = deliveryModel.Cost,
+                    Products = deliveryModel.Products
+                }, ct);
+            }
+            catch (Exception)
+            {
+                await _bus.PubSub.PublishAsync(new PaymentRejected
+                {
+                    OrderId = deliveryModel.OrderId,
+                    Products = deliveryModel.Products
+                }, ct);
             }
         }
     }

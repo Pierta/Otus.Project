@@ -1,4 +1,5 @@
 using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
 using EasyNetQ.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Otus.Project.MessageBus.Contracts;
 using Otus.Project.OrderApi.Extensions;
 using Otus.Project.OrderApi.Services;
 using Otus.Project.OrderApi.Settings;
@@ -19,6 +21,7 @@ using Otus.Project.Orm.Repository;
 using Prometheus;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Otus.Project.OrderApi
@@ -27,6 +30,8 @@ namespace Otus.Project.OrderApi
     {
         private const string Readiness = "Readiness";
         private const string HealthCheckSql = "SELECT 1 FROM User;";
+
+        private const string SubscriptionIdPrefix = "OrderService";
 
         public Startup(IConfiguration configuration)
         {
@@ -107,6 +112,7 @@ namespace Otus.Project.OrderApi
             services.AddScoped<DbContext, StorageContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ISagaOrderService, SagaOrderService>();
             services.AddScoped<IBillingApiClient, BillingApiClient>();
 
             // service bus infrastructure configuration
@@ -114,6 +120,19 @@ namespace Otus.Project.OrderApi
                 ?? Configuration["ServiceBusSettings:Connection"];
 
             services.AddSingleton(RabbitHutch.CreateBus(serviceBusConnection));
+            services.AddSingleton<MessageDispatcher>();
+            services.AddSingleton(provider =>
+            {
+                return new AutoSubscriber(provider.GetRequiredService<IBus>(), SubscriptionIdPrefix)
+                {
+                    AutoSubscriberMessageDispatcher = provider.GetRequiredService<MessageDispatcher>()
+                };
+            });
+
+            // message handlers registration
+            services.AddScoped<PaymentCompletedConsumer>();
+            services.AddScoped<NoStockConsumer>();
+            services.AddScoped<StockReleasedConsumer>();
 
             // configure console logging for EasyNetQ
             LogProvider.SetCurrentLogProvider(ConsoleLogProvider.Instance);
@@ -151,6 +170,8 @@ namespace Otus.Project.OrderApi
                     Predicate = check => check.Tags.Contains(Readiness)
                 });
             });
+
+            app.ApplicationServices.GetRequiredService<AutoSubscriber>().SubscribeAsync(new[] { Assembly.GetExecutingAssembly() });
         }
     }
 }
