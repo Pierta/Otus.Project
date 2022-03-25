@@ -351,3 +351,4 @@ MigrationBackup/
 /Otus.Project.CrudApi/appsettings.local.json
 /k8s-manifests/hw-8
 *.pptx
+/k8s-manifests/project
