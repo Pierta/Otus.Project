@@ -236,9 +236,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hw-9", "hw-9", "{847C30E0-6
 		k8s-manifests\hw-9\schema.plantuml = k8s-manifests\hw-9\schema.plantuml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.StockApi", "Otus.Project.StockApi\Otus.Project.StockApi.csproj", "{2BA2B4C8-A4D9-49A3-8FB9-8445EC4C7005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.StockApi", "Otus.Project.StockApi\Otus.Project.StockApi.csproj", "{2BA2B4C8-A4D9-49A3-8FB9-8445EC4C7005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Project.DeliveryApi", "Otus.Project.DeliveryApi\Otus.Project.DeliveryApi.csproj", "{A2F8F60A-7625-4CA3-B7C0-3B5F42C6350C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otus.Project.DeliveryApi", "Otus.Project.DeliveryApi\Otus.Project.DeliveryApi.csproj", "{A2F8F60A-7625-4CA3-B7C0-3B5F42C6350C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "delivery-api-chart", "delivery-api-chart", "{542C2667-35C2-4705-9674-F39209BD679D}"
 	ProjectSection(SolutionItems) = preProject
@@ -267,6 +267,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		k8s-manifests\hw-6\stock-api-chart\templates\ingress.yaml = k8s-manifests\hw-6\stock-api-chart\templates\ingress.yaml
 		k8s-manifests\hw-6\stock-api-chart\templates\service.yaml = k8s-manifests\hw-6\stock-api-chart\templates\service.yaml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{DD0C0AEA-E856-430D-8D1C-9974CE2A842A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Diploma.Domain", "Otus.Diploma.Domain\Otus.Diploma.Domain.csproj", "{0B8CA49C-1450-48E2-BA63-60EA4316FB64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Diploma.Orm", "Otus.Diploma.Orm\Otus.Diploma.Orm.csproj", "{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otus.Diploma.AuthApi", "Otus.Diploma.AuthApi\Otus.Diploma.AuthApi.csproj", "{22EABE84-268A-43F3-9483-F2F526A1CA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -318,6 +326,18 @@ Global
 		{A2F8F60A-7625-4CA3-B7C0-3B5F42C6350C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F8F60A-7625-4CA3-B7C0-3B5F42C6350C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2F8F60A-7625-4CA3-B7C0-3B5F42C6350C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8CA49C-1450-48E2-BA63-60EA4316FB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8CA49C-1450-48E2-BA63-60EA4316FB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8CA49C-1450-48E2-BA63-60EA4316FB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8CA49C-1450-48E2-BA63-60EA4316FB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22EABE84-268A-43F3-9483-F2F526A1CA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22EABE84-268A-43F3-9483-F2F526A1CA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22EABE84-268A-43F3-9483-F2F526A1CA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22EABE84-268A-43F3-9483-F2F526A1CA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -370,6 +390,10 @@ Global
 		{580AB884-E0ED-4D2A-8377-033C6020DDBD} = {593CF09E-A9D5-479C-A0BF-10E14C9650C9}
 		{B6ADCE66-C493-4986-9F6E-AD1AECD9D584} = {542C2667-35C2-4705-9674-F39209BD679D}
 		{36BE2288-77EB-4DDB-8656-67CCB2DAEF87} = {580AB884-E0ED-4D2A-8377-033C6020DDBD}
+		{DD0C0AEA-E856-430D-8D1C-9974CE2A842A} = {A6F1B505-8977-4499-B203-E77472EAF233}
+		{0B8CA49C-1450-48E2-BA63-60EA4316FB64} = {DD0C0AEA-E856-430D-8D1C-9974CE2A842A}
+		{2CBDF7A2-A66F-4D2D-B85F-3B96E30FEFFC} = {DD0C0AEA-E856-430D-8D1C-9974CE2A842A}
+		{22EABE84-268A-43F3-9483-F2F526A1CA47} = {DD0C0AEA-E856-430D-8D1C-9974CE2A842A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09AC5AEF-8184-4B6F-B206-05E1669237E9}

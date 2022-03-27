@@ -348,7 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/Otus.Project.CrudApi/appsettings.local.json
+
+/Otus.Diploma.*
+**/appsettings.local.json
 /k8s-manifests/hw-8
-*.pptx
 /k8s-manifests/project
