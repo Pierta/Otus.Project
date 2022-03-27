@@ -350,6 +350,6 @@ MigrationBackup/
 .ionide/
 
 /Otus.Diploma.*
-**/appsettings.local.json
 /k8s-manifests/hw-8
 /k8s-manifests/project
+appsettings.local.json
